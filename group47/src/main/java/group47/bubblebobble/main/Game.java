@@ -1,7 +1,6 @@
 package group47.bubblebobble.main;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  * The Class Game sets up the JFrame window, in which the game will be played.
@@ -22,7 +21,7 @@ public class Game {
 		JFrame window = new JFrame("Bubble Bobble");
 
 		// The contentpane inside the JFrame Window (a JPanel)
-		window.setContentPane(new JPanel());
+		window.setContentPane(new GamePanel());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Our first version won't be resizable
 		window.setResizable(false);
