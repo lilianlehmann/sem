@@ -1,4 +1,4 @@
-package GameState;
+package group47.bubblebobble.gamestate;
 
 import java.awt.Color;
 import java.awt.Font;
