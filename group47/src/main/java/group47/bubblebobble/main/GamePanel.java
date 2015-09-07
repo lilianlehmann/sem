@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import GameState.GameStateManager;
+
 /**
  * The Class GamePanel, which extends the super class JPanel and implements the
  * interfaces Runnable and KeyListener. JPanel is a container inside JFrame.
@@ -46,6 +48,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	/** The g. */
 	private Graphics2D g;
+
+	/** The game state manager */
+	private GameStateManager gsm;
 
 	/**
 	 * Instantiates a new game panel.
@@ -88,6 +93,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		g = (Graphics2D) image.getGraphics();
 
 		running = true;
+
+		gsm = new GameStateManager();
 	}
 
 	/**
@@ -154,12 +161,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * Update.
 	 */
 	private void update() {
+		gsm.update();
 	}
 
 	/**
 	 * Draw.
 	 */
 	private void draw() {
+		gsm.draw(g);
 	}
 
 	/**
@@ -182,14 +191,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	 * keyPressed
 	 */
 	public void keyPressed(KeyEvent key) {
-
+		gsm.keyPressed(key.getKeyCode());
 	}
 
 	/*
 	 * keyReleased
 	 */
 	public void keyReleased(KeyEvent key) {
-
+		gsm.keyReleased(key.getKeyCode());
 	}
 
 }
