@@ -1,9 +1,14 @@
 package group47.bubblebobble.gamestate;
 
+import group47.bubblebobble.main.GamePanel;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+
+import javax.imageio.ImageIO;
 
 /**
  * The Class MenuState, which extends the super class GameState.
@@ -16,14 +21,14 @@ public class MenuState extends GameState {
 	/** The options. */
 	private String[] options = { "Start", "Help", "Quit" };
 
-	/** The title color. */
-	private Color titleColor;
-
-	/** The title font. */
-	private Font titleFont;
-
 	/** The font. */
 	private Font font;
+
+	// ** The Background */
+	private String bg = "/Backgrounds/BubbleBobble_Logo.gif";
+
+	/** The image. */
+	private BufferedImage image;
 
 	/**
 	 * Instantiates a new menu state.
@@ -36,13 +41,9 @@ public class MenuState extends GameState {
 		this.gsm = gsm;
 
 		try {
+			image = ImageIO.read(getClass().getResourceAsStream(bg));
 
-			// TODO ADD BACKGROUND
-
-			titleColor = new Color(128, 0, 0);
-			titleFont = new Font("Century Gothic", Font.PLAIN, 28);
-
-			font = new Font("Arial", Font.PLAIN, 12);
+			font = new Font("Arial", Font.PLAIN, 40);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,22 +72,21 @@ public class MenuState extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 
-		// TODO draw the background image
-
-		// draw title
-		g.setColor(titleColor);
-		g.setFont(titleFont);
-		g.drawString("Bubble Bobble", 80, 70);
+		// draw the background image
+		int x = (GamePanel.WIDTH - image.getWidth(null)) / 2;
+		int y = (GamePanel.HEIGHT - image.getHeight(null)) / 5;
+		g.drawImage(image, x, y, null);
 
 		// draw menu options
 		g.setFont(font);
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentChoice) {
-				g.setColor(Color.BLACK);
+				g.setColor(Color.GREEN);
 			} else {
-				g.setColor(Color.RED);
+				g.setColor(Color.white);
 			}
-			g.drawString(options[i], 145, 140 + i * 15);
+
+			g.drawString(options[i], 370, 420 + i * 50);
 		}
 
 	}
@@ -129,9 +129,7 @@ public class MenuState extends GameState {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see GameState.GameState#keyReleased(int)
+	 * keyReleased
 	 */
 	@Override
 	public void keyReleased(int k) {
