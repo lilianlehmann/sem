@@ -1,4 +1,4 @@
-package GameState;
+package group47.bubblebobble.gamestate;
 
 /**
  * The Class GameState. Acts as a Superclass for the separate gamestates e.g.

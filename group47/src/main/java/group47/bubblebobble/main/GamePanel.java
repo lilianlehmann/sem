@@ -1,5 +1,7 @@
 package group47.bubblebobble.main;
 
+import group47.bubblebobble.gamestate.GameStateManager;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,8 +10,6 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
-
-import GameState.GameStateManager;
 
 /**
  * The Class GamePanel, which extends the super class JPanel and implements the

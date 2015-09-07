@@ -1,4 +1,4 @@
-package GameState;
+package group47.bubblebobble.gamestate;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class GameStateManager {
 	 * Instantiates a new game state manager.
 	 */
 	public GameStateManager() {
-
+		// test
 		gameStates = new ArrayList<GameState>();
 
 		// set to menu state as this is the state with which we want to start
