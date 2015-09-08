@@ -3,14 +3,15 @@ package group47.bubblebobble.entity;
 import java.awt.Rectangle;
 import TileMap.*;
 
+/**
+ * MapObject, SuperClass for all movable and interactable objects inside the gameworld
+ */
+
 public abstract class MapObject {
 	
-	//
+	//tilemap
 	protected TileMap tileMap;
 	protected int tileSize;
-	
-	protected double xmap;
-	protected double ymap;
 	
 	//position and vector
 	protected double x;
@@ -18,7 +19,7 @@ public abstract class MapObject {
 	protected double dx;
 	protected double dy;
 	
-	//dimensons
+	//dimensions
 	protected int width;
 	protected int height;
 	
@@ -59,25 +60,40 @@ public abstract class MapObject {
 	protected double jumpStart;
 	protected double stopJumpSpeed;
 	
-	//constructor
+	/**
+	 * Constructor
+	 * @param tm TileMap in which this object lives
+	 */
 	public MapObject(TileMap tm) {
 		tileMap = tm;
 		tileSize = tm.getTileSize();
 	}
 	
+	/**
+	 * Determines if this MapObject intersects with another object
+	 * @param o the other MapObject
+	 * @return true if they intersect
+	 */
 	public boolean intersects(MapObject o) {
 		return this.getRectangel().intersects(o.getRectangel());
 	}
 	
+	/**
+	 * returns a Rectangle object describing the collisionbox of the MapObject
+	 * @return Rectangle
+	 */
 	public Rectangle getRectangel() {
 		return new Rectangle(
-				(int) x - cwidth,
-				(int) y - cheight,
+				(int) x - cwidth / 2,
+				(int) y - cheight / 2,
 				cwidth,
 				cheight
 			);
 	}
 	
+	/**
+	 * modifies xtemp and ytemp so that they don't intersect with the tileMap
+	 */
 	public void checkTileMapCollision() {
 		currCol = (int) x / tileSize;
 		currRow = (int) y / tileSize;
@@ -133,6 +149,11 @@ public abstract class MapObject {
 		}
 	}
 	
+	/**
+	 * calculates if any of the corners of the object intersect with tiles and sets the topLeft, topRight, bottomLeft and bottomRight boolean accordingly
+	 * @param x xposition to check
+	 * @param y yposition to check
+	 */
 	public void calculateCorners(double x, double y) {
 		
 		int leftTile = (int) (x - cwidth / 2) / tileSize;
@@ -167,11 +188,6 @@ public abstract class MapObject {
 	public void setVector(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
-	}
-	
-	public void setMapPosition() {
-		xmap = tileMap.getx();
-		ymap = tileMap.gety();
 	}
 	
 	public void setLeft(boolean b) { left = b; }
