@@ -1,11 +1,10 @@
 package group47.bubblebobble.gamestate;
 
 import group47.bubblebobble.main.GamePanel;
+import group47.bubblebobble.tilemap.TileMap;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-
-import TileMap.TileMap;
 
 /**
  * The Class Level1State.
