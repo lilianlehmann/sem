@@ -1,4 +1,4 @@
-package TileMap;
+package group47.bubblebobble.tilemap;
 
 import group47.bubblebobble.main.GamePanel;
 
@@ -251,10 +251,11 @@ public class TileMap {
 				if (map[row][col] == 0)
 					continue;
 
+				// translate the tile at the map coordinate into a coordinate in
+				// the tiles coordinate
 				int rc = map[row][col];
 				int r = rc / numTilesAcross;
 				int c = rc % numTilesAcross;
-				System.out.println("r: " + r + "c: " + c);
 
 				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileSize,
 						(int) y + row * tileSize, null);
