@@ -1,20 +1,17 @@
 package group47.bubblebobble.entity;
 
 import java.awt.Rectangle;
+import TileMap.*;
 
-/*
- * 16 minuten in video tutorial 3
- * compileert niet omdat de TileMap mist
+/**
+ * MapObject, SuperClass for all movable and interactable objects inside the gameworld
  */
 
 public abstract class MapObject {
 	
-	//
-	protected Tilemap tileMap;
+	//tilemap
+	protected TileMap tileMap;
 	protected int tileSize;
-	
-	protected double xmap;
-	protected double ymap;
 	
 	//position and vector
 	protected double x;
@@ -22,7 +19,7 @@ public abstract class MapObject {
 	protected double dx;
 	protected double dy;
 	
-	//dimensons
+	//dimensions
 	protected int width;
 	protected int height;
 	
@@ -63,25 +60,40 @@ public abstract class MapObject {
 	protected double jumpStart;
 	protected double stopJumpSpeed;
 	
-	constructor
+	/**
+	 * Constructor
+	 * @param tm TileMap in which this object lives
+	 */
 	public MapObject(TileMap tm) {
 		tileMap = tm;
 		tileSize = tm.getTileSize();
 	}
 	
+	/**
+	 * Determines if this MapObject intersects with another object
+	 * @param o the other MapObject
+	 * @return true if they intersect
+	 */
 	public boolean intersects(MapObject o) {
 		return this.getRectangel().intersects(o.getRectangel());
 	}
 	
+	/**
+	 * returns a Rectangle object describing the collisionbox of the MapObject
+	 * @return Rectangle
+	 */
 	public Rectangle getRectangel() {
 		return new Rectangle(
-				(int) x - cwidth,
-				(int) y - cheight,
+				(int) x - cwidth / 2,
+				(int) y - cheight / 2,
 				cwidth,
 				cheight
 			);
 	}
 	
+	/**
+	 * modifies xtemp and ytemp so that they don't intersect with the tileMap
+	 */
 	public void checkTileMapCollision() {
 		currCol = (int) x / tileSize;
 		currRow = (int) y / tileSize;
@@ -93,8 +105,55 @@ public abstract class MapObject {
 		ytemp = y;
 		
 		calculateCorners(x, ydest);
+		
+		if(dy < 0) {
+			if(topLeft || topRight) {
+				dy = 0;
+				ytemp = currRow * tileSize + cheight / 2;
+			} else {
+				ytemp += dy;
+			}
+		}
+		else if(dy > 0) {
+			if(bottomLeft || bottomRight) {
+				dy = 0;
+				falling = false;
+				ytemp = (currRow + 1) * tileSize - cheight / 2; 
+			} else {
+				ytemp += dy;
+			}
+		}
+		
+		calculateCorners(xdest, y);
+		
+		if(dx < 0) {
+			if(topLeft || bottomLeft) {
+				dx = 0;
+				xtemp = currCol * tileSize + cwidth / 2;
+			} else {
+				xtemp += dx;
+			}
+		}
+		else if(dx > 0) {
+			if(topRight || bottomRight) {
+				dx = 0;
+				xtemp = (currCol + 1) * tileSize - cwidth / 2;
+			}
+		}
+		
+		if(!falling) {
+			calculateCorners(x, ydest +1);
+			if(!bottomLeft && ! bottomRight) {
+				falling = true;
+			}
+		}
 	}
 	
+	/**
+	 * calculates if any of the corners of the object intersect with tiles and sets the topLeft, topRight, bottomLeft and bottomRight boolean accordingly
+	 * @param x xposition to check
+	 * @param y yposition to check
+	 */
 	public void calculateCorners(double x, double y) {
 		
 		int leftTile = (int) (x - cwidth / 2) / tileSize;
@@ -102,6 +161,37 @@ public abstract class MapObject {
 		int topTile = (int) (y - cheight / 2) / tileSize;
 		int bottomTile = (int) (y + cwidth /2 - 1) / tileSize;
 		
+		int tl = tileMap.getType(topTile, leftTile);
+		int tr = tileMap.getType(topTile, rightTile);
+		int bl = tileMap.getType(bottomTile, leftTile);
+		int br = tileMap.getType(bottomTile, rightTile);
+		
+		topLeft		= tl == Tile.BLOCKED;
+		topRight	= tr == Tile.BLOCKED;
+		bottomLeft	= bl == Tile.BLOCKED;
+		bottomRight	= br == Tile.BLOCKED;
+		
 	}
 	
+	public double getx() { return x; }
+	public double gety() { return y; }
+	public int getWidth() { return width; }
+	public int getHeight() { return height; }
+	public int getCWidth() { return cwidth; }
+	public int getCHeight() { return cheight; }
+	
+	public void setPosition(double x, double y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void setVector(double dx, double dy) {
+		this.dx = dx;
+		this.dy = dy;
+	}
+	
+	public void setLeft(boolean b) { left = b; }
+	public void setRight(boolean b) { right = b; }
+	public void setUp(boolean b) { up = b; }
+	public void setDown(boolean b) { down = b; }
 }
