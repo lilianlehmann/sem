@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	// DIMENSIONS
 
 	/** The Constant WIDTH. */
-	public static final int WIDTH = 800;
+	public static final int WIDTH = 810;
 
 	/** The Constant HEIGHT. */
 	public static final int HEIGHT = 600;
