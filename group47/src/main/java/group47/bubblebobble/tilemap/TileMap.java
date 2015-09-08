@@ -107,6 +107,7 @@ public class TileMap {
 				subimage = tileset.getSubimage(col * tileSize, tileSize,
 						tileSize, tileSize);
 				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
+								
 			}
 
 		} catch (Exception e) {
@@ -254,7 +255,7 @@ public class TileMap {
 				// translate the tile at the map coordinate into a coordinate in
 				// the tiles coordinate
 				int rc = map[row][col];
-				int r = rc / numTilesAcross;
+				int r = rc / numTilesAcross +1;
 				int c = rc % numTilesAcross;
 
 				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileSize,
