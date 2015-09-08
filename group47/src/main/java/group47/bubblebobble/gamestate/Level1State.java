@@ -1,9 +1,11 @@
 package group47.bubblebobble.gamestate;
 
+import group47.bubblebobble.entity.Player;
 import group47.bubblebobble.main.GamePanel;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import TileMap.TileMap;
 
@@ -15,6 +17,9 @@ public class Level1State extends GameState {
 	/** The tile map. */
 	private TileMap tileMap;
 
+	/** The player. */
+	private Player player;
+	
 	/**
 	 * Instantiates a new level1 state.
 	 *
@@ -36,7 +41,8 @@ public class Level1State extends GameState {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tiles/Bubble_Tile.gif");
 		tileMap.loadMap("/Maps/level1-2.map");
-
+		player = new Player(tileMap);
+		player.setPosition(100,  100);
 	}
 
 	/*
@@ -44,6 +50,7 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public void update() {
+		player.update();
 	}
 
 	/*
@@ -58,7 +65,10 @@ public class Level1State extends GameState {
 
 		// draw tilemap
 		tileMap.draw(g);
-
+		
+		
+		// draw player
+		player.draw(g);
 	}
 
 	/*
@@ -68,6 +78,9 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public void keyPressed(int k) {
+		if(k == KeyEvent.VK_LEFT) {player.setLeft(true);}
+		if(k == KeyEvent.VK_RIGHT) {player.setRight(true);}
+		if(k == KeyEvent.VK_UP) {player.setUp(true);}
 	}
 
 	/*
@@ -77,6 +90,9 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public void keyReleased(int k) {
+		if(k == KeyEvent.VK_LEFT) {player.setLeft(false);}
+		if(k == KeyEvent.VK_RIGHT) {player.setRight(false);}
+		if(k == KeyEvent.VK_UP) {player.setUp(false);}
 	}
 
 }
