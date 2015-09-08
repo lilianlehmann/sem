@@ -107,6 +107,7 @@ public class TileMap {
 				subimage = tileset.getSubimage(col * tileSize, tileSize,
 						tileSize, tileSize);
 				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
+								
 			}
 
 		} catch (Exception e) {
@@ -252,9 +253,8 @@ public class TileMap {
 					continue;
 
 				int rc = map[row][col];
-				int r = rc / numTilesAcross;
+				int r = rc / numTilesAcross +1;
 				int c = rc % numTilesAcross;
-				System.out.println("r: " + r + "c: " + c);
 
 				g.drawImage(tiles[r][c].getImage(), (int) x + col * tileSize,
 						(int) y + row * tileSize, null);
