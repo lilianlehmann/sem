@@ -284,4 +284,12 @@ public class TileMap {
 		return numCols;
 	}
 
+	public int[][] getMap() {
+		return map;
+	}
+
+	public Tile[][] getTiles() {
+		return tiles;
+	}
+
 }
