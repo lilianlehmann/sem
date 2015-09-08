@@ -1,4 +1,4 @@
-package TileMap;
+package group47.bubblebobble.tilemap;
 
 import java.awt.image.BufferedImage;
 
