@@ -31,6 +31,8 @@ public class GameStateManager {
 		currentState = MENUSTATE;
 		// first state
 		gameStates.add(new MenuState(this));
+		// second state
+		gameStates.add(new Level1State(this));
 
 	}
 
