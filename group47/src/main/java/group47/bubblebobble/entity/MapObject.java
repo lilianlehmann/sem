@@ -1,5 +1,7 @@
 package group47.bubblebobble.entity;
 
+import group47.bubblebobble.tilemap.TileMap;
+
 import java.awt.Rectangle;
 
 /*
@@ -10,7 +12,7 @@ import java.awt.Rectangle;
 public abstract class MapObject {
 	
 	//
-	protected Tilemap tileMap;
+	protected TileMap tileMap;
 	protected int tileSize;
 	
 	protected double xmap;
