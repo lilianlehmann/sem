@@ -2,14 +2,14 @@ package group47.bubblebobble.tilemap;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Graphics2D;
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.awt.Graphics2D;
+import java.io.IOException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TileMapTest {
@@ -18,12 +18,15 @@ public class TileMapTest {
 	private TileMap tileMap;
 
 	@Mock
-	private Graphics2D g;
+	private Graphics2D gr;
 
 	private int tileSize = 30;
 	private int numOfCols = 2;
 	private int numOfRows = 2;
 
+	/** Setup Map.
+	 * @throws IOException - Exception when loading images failed
+	 */
 	@Before
 	public void setUp() throws IOException {
 		tileMap = new TileMap(tileSize);
