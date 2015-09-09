@@ -13,16 +13,16 @@ import javax.imageio.ImageIO;
 /**
  * The Class MenuState, which extends the super class GameState.
  */
-public class MenuState extends GameState {
+public class GameOverState extends GameState {
 
 	/** The current choice. */
 	private int currentChoice = 0;
 
-	/** The options. */
-	private String[] options = { "Start", "Help", "Quit" };
-
 	/** The font. */
 	private Font font;
+	
+	/** The options. */
+	private String[] options = { "Restart", "Main Menu" };
 
 	// ** The Background */
 	private String bg = "/Backgrounds/BubbleBobble_Logo.gif";
@@ -36,7 +36,7 @@ public class MenuState extends GameState {
 	 * @param gsm
 	 *            the gamestatemanager
 	 */
-	public MenuState(GameStateManager gsm) {
+	public GameOverState(GameStateManager gsm) {
 
 		this.gsm = gsm;
 
@@ -79,16 +79,21 @@ public class MenuState extends GameState {
 		int y = (GamePanel.HEIGHT - image.getHeight(null)) / 5;
 		g.drawImage(image, x, y, null);
 
+		// draw game over options
+		g.setFont(font);
+		g.setColor(Color.RED);
+		g.drawString("GAME OVER", 320, 420);
+		
 		// draw menu options
 		g.setFont(font);
 		for (int i = 0; i < options.length; i++) {
 			if (i == currentChoice) {
-				g.setColor(Color.GREEN);
+				g.setColor(Color.YELLOW);
 			} else {
-				g.setColor(Color.white);
+				g.setColor(Color.WHITE);
 			}
 
-			g.drawString(options[i], 370, 420 + i * 50);
+			g.drawString(options[i], 320, 500 + i * 50);
 		}
 
 	}
@@ -101,10 +106,7 @@ public class MenuState extends GameState {
 			gsm.setState(GameStateManager.LEVEL1STATE);
 		}
 		if (currentChoice == 1) {
-			// TODO HELPSTATE
-		}
-		if (currentChoice == 2) {
-			System.exit(0);
+			gsm.setState(GameStateManager.MENUSTATE);
 		}
 	}
 

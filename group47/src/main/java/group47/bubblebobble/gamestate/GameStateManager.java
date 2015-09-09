@@ -18,6 +18,10 @@ public class GameStateManager {
 
 	/** The Constant LEVEL1STATE. */
 	public static final int LEVEL1STATE = 1;
+	
+	/** The Constant GAMEOVER. */
+	public static final int GAMEOVER = 2;
+	
 
 	/**
 	 * Instantiates a new game state manager.
@@ -33,6 +37,8 @@ public class GameStateManager {
 		gameStates.add(new MenuState(this));
 		// second state
 		gameStates.add(new Level1State(this));
+		// last sate
+		gameStates.add(new GameOverState(this));
 
 	}
 
