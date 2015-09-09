@@ -40,6 +40,21 @@
   			<artifactId>findbugs-maven-plugin</artifactId>
 			<version>3.0.2</version>
   		</plugin>
+		<plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>2.16</version>
+		  <configuration>
+			<suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+		</configuration>
+          <reportSets>
+            <reportSet>
+              <reports>
+                <report>checkstyle</report>
+              </reports>
+            </reportSet>
+          </reportSets>
+        </plugin>
   	</plugins>
   </reporting>
   
@@ -59,6 +74,11 @@
   			<groupId>org.codehaus.mojo</groupId>
   			<artifactId>findbugs-maven-plugin</artifactId>
 			<version>3.0.2</version>
+  		</plugin>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-checkstyle-plugin</artifactId>
+  			<version>2.16</version>
   		</plugin>
   	</plugins>
   </build>
