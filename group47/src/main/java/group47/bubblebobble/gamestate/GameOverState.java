@@ -20,6 +20,9 @@ public class GameOverState extends GameState {
 
 	/** The font. */
 	private Font font;
+	
+	/** The options. */
+	private String[] options = { "Restart", "Main Menu" };
 
 	// ** The Background */
 	private String bg = "/Backgrounds/BubbleBobble_Logo.gif";
@@ -79,9 +82,32 @@ public class GameOverState extends GameState {
 		// draw game over options
 		g.setFont(font);
 		g.setColor(Color.RED);
-		g.drawString("Game Over", 320, 450);
-		g.drawString("Press enter to restart", 210, 500);
+		g.drawString("GAME OVER", 320, 420);
+		
+		// draw menu options
+		g.setFont(font);
+		for (int i = 0; i < options.length; i++) {
+			if (i == currentChoice) {
+				g.setColor(Color.YELLOW);
+			} else {
+				g.setColor(Color.WHITE);
+			}
 
+			g.drawString(options[i], 320, 500 + i * 50);
+		}
+
+	}
+
+	/**
+	 * Select between different menu options.
+	 */
+	private void select() {
+		if (currentChoice == 0) {
+			gsm.setState(GameStateManager.LEVEL1STATE);
+		}
+		if (currentChoice == 1) {
+			gsm.setState(GameStateManager.MENUSTATE);
+		}
 	}
 
 	/*
@@ -90,7 +116,19 @@ public class GameOverState extends GameState {
 	@Override
 	public void keyPressed(int k) {
 		if (k == KeyEvent.VK_ENTER) {
-			gsm.setState(GameStateManager.LEVEL1STATE);
+			select();
+		}
+		if (k == KeyEvent.VK_UP) {
+			currentChoice--;
+			if (currentChoice == -1) {
+				currentChoice = options.length - 1;
+			}
+		}
+		if (k == KeyEvent.VK_DOWN) {
+			currentChoice++;
+			if (currentChoice == options.length) {
+				currentChoice = 0;
+			}
 		}
 	}
 
