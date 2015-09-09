@@ -1,17 +1,22 @@
 package group47.bubblebobble.entity;
 
+import group47.bubblebobble.tilemap.TileMap;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-
-import group47.bubblebobble.tilemap.*;
 
 public class Player extends MapObject {
 	
 	private int health;
 	private int maxHealth;
-		
+	
+	private long lastFireTime;
+	private int fireDelay; //ms
+	private ArrayList<Projectile> projectiles;
+	
 	public Player(TileMap tm) {
 		super(tm);
 		width = 30;
@@ -30,6 +35,9 @@ public class Player extends MapObject {
 		facingRight = true;
 		
 		health = maxHealth = 5;
+		fireDelay = 500;
+		
+		projectiles = new ArrayList<Projectile>();
 		
 		//Load sprite
 		try {
@@ -50,9 +58,21 @@ public class Player extends MapObject {
 	 * Called every frame. Updates player position, looks for collision and then puts the player in the new position
 	 */
 	public void update() {
+		for(int i = 0; i < projectiles.size(); i++)
+			projectiles.get(i).update();
+		
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
+		
+		if(down) {
+			if(lastFireTime + fireDelay < System.currentTimeMillis()) {
+				lastFireTime = System.currentTimeMillis();
+				Projectile projectile = new Projectile(tileMap);
+				projectile.setPosition(x, y);
+				projectiles.add(projectile);
+			}
+		}
 	}
 	
 	
@@ -96,6 +116,8 @@ public class Player extends MapObject {
 	public void draw(Graphics2D g) {
 		//draw player
 		super.draw(g);
+		for(int i = 0; i < projectiles.size(); i++)
+			projectiles.get(i).draw(g);
 	}
 	
 }

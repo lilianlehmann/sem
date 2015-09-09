@@ -95,6 +95,7 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
 		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
 		if(k == KeyEvent.VK_UP) player.setUp(true);
+		if(k == KeyEvent.VK_DOWN) player.setDown(true);
 	}
 
 	/*
@@ -107,6 +108,7 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_LEFT) player.setLeft(false);
 		if(k == KeyEvent.VK_RIGHT) player.setRight(false);
 		if(k == KeyEvent.VK_UP) player.setUp(false);
+		if(k == KeyEvent.VK_DOWN) player.setDown(false);
 	}
 
 }
