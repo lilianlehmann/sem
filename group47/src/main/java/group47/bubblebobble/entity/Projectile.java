@@ -36,6 +36,7 @@ public class Projectile extends MapObject {
 	}
 	
 	public void update() {
+
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 	}
