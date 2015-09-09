@@ -3,7 +3,9 @@
 **Plugins**  
 Gebruik a.u.b. de volgende plugins tijdens het programmeren  
 1. Checkstyle (right-click on project -> Checkstyle -> Activate Checkstyle)  
-Deze plugin controlleert jouw code op stijlfouten. Probeer deze zo veel mogelijk te vermijden.  
+Deze plugin controlleert jouw code op stijlfouten. Er zijn twee plugins voor: eentje in maven (door mij geconfigureerd) en eentje in Eclipse, die moet je zelf configureren.  
+We gebruiken de Google checkstyle settings, maar staan daarbij wel het gebruik van tabs toe. Zorg dus dat je dit op dezelfde manier in eclipse instelt en dat jouw code vervolgens 
+geen fouten heeft.  
 2. PMD & FindBugs  
 Deze plugin zoekt naar zogenaamde 'code smells' en bugs. Voor het verslag voer je maven uit (Run as...->Maven build...) met als target 'site'.
 Het resultaat komt in target/site/ en is het bekijken waard.  
