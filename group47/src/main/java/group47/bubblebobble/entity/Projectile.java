@@ -39,4 +39,5 @@ public class Projectile extends MapObject {
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 	}
+
 }
