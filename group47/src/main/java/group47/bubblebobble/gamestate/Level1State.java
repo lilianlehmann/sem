@@ -1,9 +1,11 @@
 package group47.bubblebobble.gamestate;
 
+import group47.bubblebobble.entity.Enemy;
+import group47.bubblebobble.entity.HUD;
+import group47.bubblebobble.entity.Player;
+import group47.bubblebobble.entity.enemies.Level1Enemy;
 import group47.bubblebobble.main.GamePanel;
 import group47.bubblebobble.tilemap.TileMap;
-import group47.bubblebobble.entity.*;
-import group47.bubblebobble.entity.enemies.Level1Enemy;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -14,10 +16,11 @@ import java.util.ArrayList;
  * The Class Level1State.
  */
 public class Level1State extends GameState {
-	
+
 	private Player player;
 	private ArrayList<Enemy> enemies;
-	
+	private HUD hud;
+
 	/** The tile map. */
 	private TileMap tileMap;
 
@@ -44,7 +47,7 @@ public class Level1State extends GameState {
 		tileMap.loadMap("/Maps/level1-2.map");
 		player = new Player(tileMap);
 		player.setPosition(100d, 100d);
-		
+
 		enemies = new ArrayList<Enemy>();
 		Level1Enemy e1;
 		Level1Enemy e2;
@@ -66,6 +69,9 @@ public class Level1State extends GameState {
 		enemies.add(e3);
 		enemies.add(e4);
 		enemies.add(e5);
+
+		// initialize HUD
+		hud = new HUD(player);
 	}
 
 	/*
@@ -74,37 +80,46 @@ public class Level1State extends GameState {
 	@Override
 	public void update() {
 		player.update();
-		
-		//update all enemies
-		for(int i = 0; i < enemies.size(); i++) {
+
+		// update all enemies
+		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
-		
-		//collision check between player and enemies
-		for(int i = 0; i < enemies.size(); i++) {
-			if(player.intersects(enemies.get(i))) {
-				if(enemies.get(i).isCaught()) {
-					//kill enemy
+
+		// collision check between player and enemies
+		for (int i = 0; i < enemies.size(); i++) {
+			if (player.intersects(enemies.get(i))) {
+				if (enemies.get(i).isCaught()) {
+					// kill enemy
+					player.setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
+				} else if (player.getLives() > 1) {
+
+					// player loses a life
+					player.hit(1);
+					System.out.println("Lost a life");
+
 				} else {
-					//kill player
+					// kill player
+					System.out.println(player.getIsAlive());
 					gsm.setState(GameStateManager.GAMEOVER);
 					return;
+
 				}
 			}
 		}
-		//collision check between projectiles and enemies
-		for(int i = 0; i < enemies.size(); i++) {
-			for(int j = 0; j < player.getProjectiles().size(); j++) {
-				if(player.getProjectiles().get(j).intersects(enemies.get(i))) {
+		// collision check between projectiles and enemies
+		for (int i = 0; i < enemies.size(); i++) {
+			for (int j = 0; j < player.getProjectiles().size(); j++) {
+				if (player.getProjectiles().get(j).intersects(enemies.get(i))) {
 					player.getProjectiles().remove(j);
 					j--;
 					enemies.get(i).setCaught();
-					
+
 				}
 			}
 		}
-		
+
 	}
 
 	/*
@@ -120,11 +135,14 @@ public class Level1State extends GameState {
 		// draw tilemap
 		tileMap.draw(g);
 		player.draw(g);
-		
-		//draw all enemies
-		for(int i = 0; i < enemies.size(); i++) {
+
+		// draw all enemies
+		for (int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(g);
 		}
+
+		// draw hud
+		hud.draw(g);
 	}
 
 	/*
@@ -134,10 +152,14 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public void keyPressed(int k) {
-		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
-		if(k == KeyEvent.VK_UP) player.setUp(true);
-		if(k == KeyEvent.VK_DOWN) player.setDown(true);
+		if (k == KeyEvent.VK_LEFT)
+			player.setLeft(true);
+		if (k == KeyEvent.VK_RIGHT)
+			player.setRight(true);
+		if (k == KeyEvent.VK_UP)
+			player.setUp(true);
+		if (k == KeyEvent.VK_DOWN)
+			player.setDown(true);
 	}
 
 	/*
@@ -147,11 +169,14 @@ public class Level1State extends GameState {
 	 */
 	@Override
 	public void keyReleased(int k) {
-		if(k == KeyEvent.VK_LEFT) player.setLeft(false);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(false);
-		if(k == KeyEvent.VK_UP) player.setUp(false);
-		if(k == KeyEvent.VK_DOWN) player.setDown(false);
+		if (k == KeyEvent.VK_LEFT)
+			player.setLeft(false);
+		if (k == KeyEvent.VK_RIGHT)
+			player.setRight(false);
+		if (k == KeyEvent.VK_UP)
+			player.setUp(false);
+		if (k == KeyEvent.VK_DOWN)
+			player.setDown(false);
 	}
-
 
 }
