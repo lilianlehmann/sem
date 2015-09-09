@@ -63,9 +63,9 @@ public class Level1State extends GameState {
 		e5.setPosition(100d, 550d);
 		enemies.add(e1);
 		enemies.add(e2);
-		//enemies.add(e3);
-		//enemies.add(e4);
-		//enemies.add(e5);
+		enemies.add(e3);
+		enemies.add(e4);
+		enemies.add(e5);
 	}
 
 	/*
@@ -93,15 +93,12 @@ public class Level1State extends GameState {
 			}
 		}
 		//collision check between projectiles and enemies
-		for(int i = 0; i < player.getProjectiles().size(); i++) {
-			for(int j = 0; j < enemies.size(); j++) {
-				if(player.getProjectiles().get(i).intersects(enemies.get(j))) {
-					System.out.println(player.getProjectiles().size());
-					//player.getProjectiles().remove(i);
-					//Somehow a arrayoutofboundexception appears
-					//when more than 1 enemy is in the game, and
-					//therefor i cannot remove the projectile...
-					enemies.get(j).setCaught();
+		for(int i = 0; i < enemies.size(); i++) {
+			for(int j = 0; j < player.getProjectiles().size(); j++) {
+				if(player.getProjectiles().get(j).intersects(enemies.get(i))) {
+					player.getProjectiles().remove(j);
+					j--;
+					enemies.get(i).setCaught();
 					
 				}
 			}
