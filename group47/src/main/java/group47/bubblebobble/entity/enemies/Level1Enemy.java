@@ -22,6 +22,7 @@ public class Level1Enemy extends Enemy {
 		stopSpeed = .4;
 		
 		fallSpeed = .5;
+		floatSpeed = .1;
 		maxFallSpeed = 4.0;
 		jumpStart = -4.8;
 		stopJumpSpeed = .3;
@@ -47,6 +48,9 @@ public class Level1Enemy extends Enemy {
 	private void getNextPosition() {
 		dx = 0;
 		
+		if(caught) {
+			dy -= floatSpeed;			
+		} else		
 		if(falling) {
 			dy += fallSpeed;
 			if(dy > 0) jumping = false;

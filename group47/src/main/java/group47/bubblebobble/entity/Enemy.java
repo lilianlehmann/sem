@@ -5,6 +5,8 @@ public class Enemy extends MapObject {
 	
 	protected boolean dead;
 	protected boolean caught;
+	
+	protected double floatSpeed;
 
 	public Enemy(TileMap tm) {
 		super(tm);
@@ -24,5 +26,9 @@ public class Enemy extends MapObject {
 	}
 	
 	public void update() {}
+
+	public void setCaught() {
+		caught = true;
+	}
 	
 }

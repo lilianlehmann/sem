@@ -54,6 +54,10 @@ public class Player extends MapObject {
 		}
 	}
 	
+	public ArrayList<Projectile> getProjectiles() {
+		return projectiles;
+	}
+	
 	/*
 	 * Called every frame. Updates player position, looks for collision and then puts the player in the new position
 	 */

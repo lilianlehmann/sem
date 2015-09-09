@@ -63,6 +63,29 @@ public class Level1State extends GameState {
 		for(int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
+		
+		//collision check between player and enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			if(player.intersects(enemies.get(i))) {
+				if(enemies.get(i).isCaught()) {
+					//kill enemy
+				} else {
+					//kill player
+					System.out.println("Player Should die now");
+				}
+			}
+		}
+		
+		//collision check between projectiles and enemies
+		for(int i = 0; i < player.getProjectiles().size(); i++) {
+			for(int j = 0; j < enemies.size(); j++) {
+				if(player.getProjectiles().get(i).intersects(enemies.get(j))) {
+					player.getProjectiles().remove(i);
+					enemies.get(j).setCaught();
+				}
+			}
+		}
+		
 	}
 
 	/*
