@@ -1,222 +1,449 @@
 package group47.bubblebobble.entity;
 
+import group47.bubblebobble.tilemap.Tile;
+import group47.bubblebobble.tilemap.TileMap;
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import group47.bubblebobble.tilemap.*;
-
 /**
- * MapObject, SuperClass for all movable and interactable objects inside the gameworld
+ * MapObject, SuperClass for all movable and interactable objects inside the
+ * gameworld.
  */
 
 public abstract class MapObject {
-	
-	//tileMap
+
+	// TILEMAP
+
+	/** The tile map. */
 	protected TileMap tileMap;
+
+	/** The tile size. */
 	protected int tileSize;
-	
-	//position and vector
+
+	// POSITION AND VECTOR
+
+	/** The x. */
 	protected double x;
+
+	/** The y. */
 	protected double y;
+
+	/** The dx. */
 	protected double dx;
+
+	/** The dy. */
 	protected double dy;
-	
-	//sprite dimension
+
+	// SPRITE DIMENSION
+
+	/** The width. */
 	protected int width;
+
+	/** The height. */
 	protected int height;
-	
-	//collision
+
+	// COLLISION
+
+	/** The cwidth. */
 	protected int cwidth;
+
+	/** The cheight. */
 	protected int cheight;
+
+	/** The curr row. */
 	protected int currRow;
+
+	/** The curr col. */
 	protected int currCol;
+
+	/** The xdest. */
 	protected double xdest;
+
+	/** The ydest. */
 	protected double ydest;
+
+	/** The xtemp. */
 	protected double xtemp;
+
+	/** The ytemp. */
 	protected double ytemp;
+
+	/** The top left. */
 	protected boolean topLeft;
+
+	/** The top right. */
 	protected boolean topRight;
+
+	/** The bottom left. */
 	protected boolean bottomLeft;
+
+	/** The bottom right. */
 	protected boolean bottomRight;
-	
-	//animation
-	//protected Animation animation;
+
+	// ANIMATION
+
+	/** The current action. */
 	protected int currentAction;
+
+	/** The previous action. */
 	protected int previousAction;
+
+	/** The facing right. */
 	protected boolean facingRight;
-	
-	//movement
+
+	// MOVEMENT
+
+	/** The left. */
 	protected boolean left;
-	protected boolean right; 
+
+	/** The right. */
+	protected boolean right;
+
+	/** The up. */
 	protected boolean up;
+
+	/** The down. */
 	protected boolean down;
+
+	/** The jumping. */
 	protected boolean jumping;
+
+	/** The falling. */
 	protected boolean falling;
-	
-	//movementAttributes
+
+	/** The mov speed. */
 	protected double movSpeed;
+
+	/** The max speed. */
 	protected double maxSpeed;
+
+	/** The stop speed. */
 	protected double stopSpeed;
+
+	/** The fall speed. */
 	protected double fallSpeed;
+
+	/** The max fall speed. */
 	protected double maxFallSpeed;
+
+	/** The jump start. */
 	protected double jumpStart;
+
+	/** The stop jump speed. */
 	protected double stopJumpSpeed;
-	
-	//graphcis
+
+	// GRAPHICS
+	/** The sprite. */
 	protected BufferedImage sprite;
-	
+
 	/**
-	 * Constructor
-	 * @param tm TileMap in which this object lives
+	 * Constructor.
+	 *
+	 * @param tm
+	 *            TileMap in which this object lives
 	 */
 	public MapObject(TileMap tm) {
 		tileMap = tm;
 		tileSize = tm.getTileSize();
 	}
-	
+
 	/**
-	 * Determines if this MapObject intersects with another object
-	 * @param o the other MapObject
+	 * Determines if this MapObject intersects with another object.
+	 *
+	 * @param o
+	 *            the other MapObject
 	 * @return true if they intersect
 	 */
 	public boolean intersects(MapObject o) {
 		return this.getRectangle().intersects(o.getRectangle());
 	}
-	
+
 	/**
-	 * returns a Rectangle object describing the collisionbox of the MapObject
+	 * returns a Rectangle object describing the collisionbox of the MapObject.
+	 *
 	 * @return Rectangle
 	 */
 	public Rectangle getRectangle() {
-		return new Rectangle(
-				(int) x - cwidth / 2,
-				(int) y - cheight / 2,
-				cwidth,
-				cheight
-			);
+		return new Rectangle((int) x - cwidth / 2, (int) y - cheight / 2,
+				cwidth, cheight);
 	}
-	
+
 	/**
-	 * modifies xtemp and ytemp so that they don't intersect with the tileMap
+	 * modifies xtemp and ytemp so that they don't intersect with the tileMap.
 	 */
 	public void checkTileMapCollision() {
-		//Determine current collum and row
+		// Determine current collum and row
 		currCol = (int) x / tileSize;
 		currRow = (int) y / tileSize;
-		
-		//Destination coordinates
+
+		// Destination coordinates
 		xdest = x + dx;
 		ydest = y + dy;
-		
-		//Temporary coordinates
+
+		// Temporary coordinates
 		xtemp = x;
 		ytemp = y;
-		
-		//Check for collisions in the y direction
+
+		// Check for collisions in the y direction
 		calculateCorners(x, ydest);
-		if(dy < 0) { //If we are moving upwards
-			if(topLeft || topRight) { //And our topLeft or topRight corner is colliding with a 'BLOCKED' tile
-				dy = 0; //Our vertical movement vector becomes 0
-				ytemp = currRow * tileSize + cheight / 2; //Our new position becomes just below the tile above we are colliding with
-			} else { //If we are not colliding
-				ytemp += dy; //Our y vector is added to our temporary y position
+		// If we are moving upwards
+		if (dy < 0) {
+			// And our topLeft or topRight corner is
+			// colliding with a 'BLOCKED' tile
+			if (topLeft || topRight) {
+				// Our vertical movement vector becomes 0
+				dy = 0;
+
+				// Our new position becomes just below the tile above we are
+				// colliding with
+				ytemp = currRow * tileSize + cheight / 2;
+
+			}
+
+			// If we are not colliding
+			else {
+				// Our y vector is added to our temporary y position
+				ytemp += dy;
+			}
+
+		}
+		// If we are moving downwards
+		else if (dy > 0) {
+			// And our bottomLeft or bottomRight corner is colliding with a
+			// 'BLOCKED' tile
+			if (bottomLeft || bottomRight) {
+				// Our horizontal movement vector becomes 0
+				dy = 0;
+				// We are standing on a solid tile, so we are not falling
+				falling = false;
+
+				// Our new position becomes just on top of the tile we are
+				// colliding with
+				ytemp = (currRow + 1) * tileSize - cheight / 2;
+
+			}
+
+			// If we are not colliding
+			else {
+				// Our y vector is added to our temporary y position
+				ytemp += dy;
 			}
 		}
-		else if(dy > 0) { //If we are moving downwards
-			if(bottomLeft || bottomRight) { //And our bottomLeft or bottomRight corner is colliding with a 'BLOCKED' tile
-				dy = 0; //Our horizontal movement vector becomes 0
-				falling = false; //We are standing on a solid tile, so we are not falling
-				ytemp = (currRow + 1) * tileSize - cheight / 2; //Our new position becomes just on top of the tile we are colliding with
-			} else { //If we are not colliding
-				ytemp += dy; //Our y vector is added to our temporary y position
-			}
-		}
-		
-		//Check for collisions in the x direction
+
+		// Check for collisions in the x direction
 		calculateCorners(xdest, y);
-		if(dx < 0) { //If we are moving to the left
-			if(topLeft || bottomLeft) { //And we are colliding on the left
-				dx = 0; //Our horizontal movement vector becomes 0
-				xtemp = currCol * tileSize + cwidth / 2; //Our new position is set to just to the right of the blocking tile
-			} else { //If we are not colliding
-				xtemp += dx; //Apply the horizontal movement vector
+
+		// If we are moving to the left
+		if (dx < 0) {
+			// And we are colliding on the left
+
+			if (topLeft || bottomLeft) {
+				// Our horizontal movement vector becomes 0
+				dx = 0;
+
+				// Our new position is set to just to the right of the blocking
+				// tile
+				xtemp = currCol * tileSize + cwidth / 2;
+
+			}
+
+			// If we are not colliding
+			else {
+				// Apply the horizontal movement vector
+				xtemp += dx;
+			}
+
+		}
+
+		// If we are moving to the right
+		else if (dx > 0) {
+			// And we are colliding on the right
+			if (topRight || bottomRight) {
+				// Our horizontal movement vector becomes 0
+				dx = 0;
+
+				// Our new position is set just to the left of the blocking tile
+				xtemp = (currCol + 1) * tileSize - cwidth / 2;
+			}
+
+			// If we are not colliding
+			else {
+
+				// Apply the horizontal movement vector;
+				xtemp += dx;
 			}
 		}
-		else if(dx > 0) { //If we are moving to the right
-			if(topRight || bottomRight) { //And we are colliding on the right
-				dx = 0; //Our horizontal movement vector becomes 0
-				xtemp = (currCol + 1) * tileSize - cwidth / 2; //Our new position is set just to the left of the blocking tile
-			} else { //If we are not colliding
-				xtemp += dx; //Apply the horizontal movement vector;
-			}
-		}
-		
-		//Check if we are falling
-		if(!falling) {
-			calculateCorners(x, ydest +1); //See if we move 1 pixel downwards if we are colliding
-			if(!bottomLeft && ! bottomRight) { //If we do not collide we are falling
+
+		// Check if we are falling
+		if (!falling) {
+			// See if we move 1 pixel downwards if we are colliding
+			calculateCorners(x, ydest + 1);
+
+			// If we do not collide we are falling
+			if (!bottomLeft && !bottomRight) {
 				falling = true;
 			}
 		}
 	}
-	
+
 	/**
-	 * calculates if any of the corners of the object intersect with tiles and sets the topLeft, topRight, bottomLeft and bottomRight boolean accordingly
-	 * @param x xposition to check
-	 * @param y yposition to check
+	 * calculates if any of the corners of the object intersect with tiles and
+	 * sets the topLeft, topRight, bottomLeft and bottomRight boolean
+	 * accordingly.
+	 *
+	 * @param x
+	 *            xposition to check
+	 * @param y
+	 *            yposition to check
 	 */
 	public void calculateCorners(double x, double y) {
 		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x + cwidth / 2  - 1) / tileSize;
+		int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
 		int topTile = (int) (y - cheight / 2) / tileSize;
-		int bottomTile = (int) (y + cwidth /2 - 1) / tileSize;
-		
+		int bottomTile = (int) (y + cwidth / 2 - 1) / tileSize;
+
 		int tl = tileMap.getType(topTile, leftTile);
 		int tr = tileMap.getType(topTile, rightTile);
 		int bl = tileMap.getType(bottomTile, leftTile);
 		int br = tileMap.getType(bottomTile, rightTile);
-		
-		//Flags for whether we are colliding
-		topLeft		= tl == Tile.BLOCKED;
-		topRight	= tr == Tile.BLOCKED;
-		bottomLeft	= bl == Tile.BLOCKED;
-		bottomRight	= br == Tile.BLOCKED;
+
+		// Flags for whether we are colliding
+		topLeft = tl == Tile.BLOCKED;
+		topRight = tr == Tile.BLOCKED;
+		bottomLeft = bl == Tile.BLOCKED;
+		bottomRight = br == Tile.BLOCKED;
 	}
-	
-	
-	//Get functions
-	public double getx() { return x; }
-	public double gety() { return y; }
-	public int getWidth() { return width; }
-	public int getHeight() { return height; }
-	public int getCWidth() { return cwidth; }
-	public int getCHeight() { return cheight; }
-	
-	
-	//Set functions
+
+	/**
+	 * Draw.
+	 *
+	 * @param g
+	 *            the g
+	 */
+	public void draw(Graphics2D g) {
+		g.drawImage(sprite, (int) (x - width / 2), (int) (y - height / 2), null);
+	}
+
+	/**
+	 * Gets the x.
+	 *
+	 * @return the x
+	 */
+	public double getx() {
+		return x;
+	}
+
+	/**
+	 * Gets the y.
+	 *
+	 * @return the y
+	 */
+	public double gety() {
+		return y;
+	}
+
+	/**
+	 * Gets the width.
+	 *
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Gets the height.
+	 *
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * Gets the c width.
+	 *
+	 * @return the c width
+	 */
+	public int getCWidth() {
+		return cwidth;
+	}
+
+	/**
+	 * Gets the c height.
+	 *
+	 * @return the c height
+	 */
+	public int getCHeight() {
+		return cheight;
+	}
+
+	/**
+	 * Sets the position.
+	 *
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 */
 	public void setPosition(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
+	/**
+	 * Sets the vector.
+	 *
+	 * @param dx
+	 *            the dx
+	 * @param dy
+	 *            the dy
+	 */
 	public void setVector(double dx, double dy) {
 		this.dx = dx;
 		this.dy = dy;
 	}
-	
-	public void setLeft(boolean b) { left = b; }
-	public void setRight(boolean b) { right = b; }
-	public void setUp(boolean b) { up = b; }
-	public void setDown(boolean b) { down = b; }
-	
-	public void draw(Graphics2D g) {
-		g.drawImage(
-				sprite, 
-				(int) (x - width / 2), 
-				(int) (y - height / 2), 
-				null
-		);
+
+	/**
+	 * Sets the left.
+	 *
+	 * @param b
+	 *            the new left
+	 */
+	public void setLeft(boolean b) {
+		left = b;
 	}
-	
+
+	/**
+	 * Sets the right.
+	 *
+	 * @param b
+	 *            the new right
+	 */
+	public void setRight(boolean b) {
+		right = b;
+	}
+
+	/**
+	 * Sets the up.
+	 *
+	 * @param b
+	 *            the new up
+	 */
+	public void setUp(boolean b) {
+		up = b;
+	}
+
+	/**
+	 * Sets the down.
+	 *
+	 * @param b
+	 *            the new down
+	 */
+	public void setDown(boolean b) {
+		down = b;
+	}
+
 }

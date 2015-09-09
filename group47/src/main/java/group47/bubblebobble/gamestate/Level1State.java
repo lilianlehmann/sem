@@ -91,13 +91,17 @@ public class Level1State extends GameState {
 			if (player.intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
 					// kill enemy
+					player.setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
+				} else if (player.getLives() != 0) {
+
+					// player loses a life
+					player.hit(1);
+					System.out.println("Lost a life");
+
 				} else {
-
 					// kill player
-					System.out.println("Player Should die now");
-
-					// kill player
+					System.out.println(player.getIsAlive());
 					gsm.setState(GameStateManager.GAMEOVER);
 					return;
 
