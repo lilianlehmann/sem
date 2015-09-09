@@ -9,6 +9,7 @@ import group47.bubblebobble.tilemap.TileMap;
 
 public class Level1Enemy extends Enemy {
 
+	BufferedImage spritesheet;
 	public Level1Enemy(TileMap tm) {
 		
 		super(tm);
@@ -22,6 +23,7 @@ public class Level1Enemy extends Enemy {
 		stopSpeed = .4;
 		
 		fallSpeed = .5;
+		floatSpeed = .1;
 		maxFallSpeed = 4.0;
 		jumpStart = -4.8;
 		stopJumpSpeed = .3;
@@ -29,13 +31,14 @@ public class Level1Enemy extends Enemy {
 		facingRight = true;
 		
 		//Load sprite
+		
 		try {
-			BufferedImage spritesheet = ImageIO.read(
+			spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
-						"/Tiles/Bubble_Tile.gif"
+						"/Enemies/Level1.gif"
 						)
 			);
-			sprite = spritesheet.getSubimage(0, 30, 30, 30);
+			sprite = spritesheet.getSubimage(0, 0, 30, 30);
 		}
 		
 		catch(Exception e) {
@@ -47,6 +50,9 @@ public class Level1Enemy extends Enemy {
 	private void getNextPosition() {
 		dx = 0;
 		
+		if(caught) {
+			dy -= floatSpeed;			
+		} else		
 		if(falling) {
 			dy += fallSpeed;
 			if(dy > 0) jumping = false;
@@ -71,6 +77,10 @@ public class Level1Enemy extends Enemy {
 		super.draw(g);
 	}
 	
+	public void setCaught(){
+		caught = true;
+		sprite = spritesheet.getSubimage(90, 0, 30, 30);
+	}
 	
 	
 }

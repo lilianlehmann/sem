@@ -46,10 +46,26 @@ public class Level1State extends GameState {
 		player.setPosition(100d, 100d);
 		
 		enemies = new ArrayList<Enemy>();
-		Level1Enemy e;
-		e = new Level1Enemy(tileMap);
-		e.setPosition(300d, 100d);
-		enemies.add(e);
+		Level1Enemy e1;
+		Level1Enemy e2;
+		Level1Enemy e3;
+		Level1Enemy e4;
+		Level1Enemy e5;
+		e1 = new Level1Enemy(tileMap);
+		e2 = new Level1Enemy(tileMap);
+		e3 = new Level1Enemy(tileMap);
+		e4 = new Level1Enemy(tileMap);
+		e5 = new Level1Enemy(tileMap);
+		e1.setPosition(300d, 100d);
+		e2.setPosition(500d, 100d);
+		e3.setPosition(300d, 250d);
+		e4.setPosition(500d, 400d);
+		e5.setPosition(100d, 550d);
+		enemies.add(e1);
+		enemies.add(e2);
+		enemies.add(e3);
+		enemies.add(e4);
+		enemies.add(e5);
 	}
 
 	/*
@@ -63,6 +79,31 @@ public class Level1State extends GameState {
 		for(int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).update();
 		}
+		
+		//collision check between player and enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			if(player.intersects(enemies.get(i))) {
+				if(enemies.get(i).isCaught()) {
+					//kill enemy
+					enemies.remove(i);
+				} else {
+					//kill player
+					System.out.println("Player Should die now");
+				}
+			}
+		}
+		//collision check between projectiles and enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			for(int j = 0; j < player.getProjectiles().size(); j++) {
+				if(player.getProjectiles().get(j).intersects(enemies.get(i))) {
+					player.getProjectiles().remove(j);
+					j--;
+					enemies.get(i).setCaught();
+					
+				}
+			}
+		}
+		
 	}
 
 	/*
@@ -110,5 +151,6 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_UP) player.setUp(false);
 		if(k == KeyEvent.VK_DOWN) player.setDown(false);
 	}
+
 
 }
