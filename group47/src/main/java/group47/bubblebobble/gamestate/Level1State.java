@@ -93,7 +93,7 @@ public class Level1State extends GameState {
 					// kill enemy
 					player.setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
-				} else if (player.getLives() != 0) {
+				} else if (player.getLives() > 1) {
 
 					// player loses a life
 					player.hit(1);

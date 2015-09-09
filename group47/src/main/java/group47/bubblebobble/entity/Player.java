@@ -66,7 +66,7 @@ public class Player extends MapObject {
 
 		facingRight = true;
 
-		lives = maxLives = 2;
+		lives = maxLives = 3;
 		extraLive = 300;
 		fireDelay = 500;
 

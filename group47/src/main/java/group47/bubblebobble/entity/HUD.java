@@ -55,9 +55,9 @@ public class HUD {
 
 		g.setFont(font);
 		g.setColor(Color.GREEN);
-		g.drawString("1UP", 100, 26);
+		g.drawString("1UP", 130, 26);
 		g.setColor(Color.WHITE);
-		g.drawString("" + player.getExtraLive(), 100, 54);
+		g.drawString("" + player.getExtraLive(), 130, 54);
 		g.setColor(Color.RED);
 		g.drawString("HIGH SCORE", 325, 26);
 		g.setColor(Color.WHITE);
