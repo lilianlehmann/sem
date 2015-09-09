@@ -71,16 +71,28 @@ public abstract class MapObject {
 	protected double ytemp;
 
 	/** The top left. */
-	protected boolean topLeft;
+	protected boolean topLeftBlocked;
 
 	/** The top right. */
-	protected boolean topRight;
+	protected boolean topRightBlocked;
 
 	/** The bottom left. */
-	protected boolean bottomLeft;
+	protected boolean bottomLeftBlocked;
 
 	/** The bottom right. */
-	protected boolean bottomRight;
+	protected boolean bottomRightBlocked;
+
+	/** The top left. */
+	protected boolean topLeftSemiBlocked;
+
+	/** The top right. */
+	protected boolean topRightSemiBlocked;
+
+	/** The bottom left. */
+	protected boolean bottomLeftSemiBlocked;
+
+	/** The bottom right. */
+	protected boolean bottomRightSemiBlocked;
 
 	// ANIMATION
 
@@ -192,7 +204,7 @@ public abstract class MapObject {
 		if (dy < 0) {
 			// And our topLeft or topRight corner is
 			// colliding with a 'BLOCKED' tile
-			if (topLeft || topRight) {
+			if (topLeftBlocked || topRightBlocked) {
 				// Our vertical movement vector becomes 0
 				dy = 0;
 
@@ -213,7 +225,9 @@ public abstract class MapObject {
 		else if (dy > 0) {
 			// And our bottomLeft or bottomRight corner is colliding with a
 			// 'BLOCKED' tile
-			if (bottomLeft || bottomRight) {
+			if (bottomLeftBlocked || bottomRightBlocked
+					|| bottomLeftSemiBlocked || bottomRightSemiBlocked) {
+
 				// Our horizontal movement vector becomes 0
 				dy = 0;
 				// We are standing on a solid tile, so we are not falling
@@ -239,7 +253,7 @@ public abstract class MapObject {
 		if (dx < 0) {
 			// And we are colliding on the left
 
-			if (topLeft || bottomLeft) {
+			if (topLeftBlocked || bottomLeftBlocked) {
 				// Our horizontal movement vector becomes 0
 				dx = 0;
 
@@ -260,7 +274,7 @@ public abstract class MapObject {
 		// If we are moving to the right
 		else if (dx > 0) {
 			// And we are colliding on the right
-			if (topRight || bottomRight) {
+			if (topRightBlocked || bottomRightBlocked) {
 				// Our horizontal movement vector becomes 0
 				dx = 0;
 
@@ -282,7 +296,8 @@ public abstract class MapObject {
 			calculateCorners(x, ydest + 1);
 
 			// If we do not collide we are falling
-			if (!bottomLeft && !bottomRight) {
+			if (!bottomLeftBlocked && !bottomLeftSemiBlocked
+					&& !bottomRightSemiBlocked && !bottomRightBlocked) {
 				falling = true;
 			}
 		}
@@ -310,10 +325,14 @@ public abstract class MapObject {
 		int br = tileMap.getType(bottomTile, rightTile);
 
 		// Flags for whether we are colliding
-		topLeft = tl == Tile.BLOCKED;
-		topRight = tr == Tile.BLOCKED;
-		bottomLeft = bl == Tile.BLOCKED;
-		bottomRight = br == Tile.BLOCKED;
+		topLeftBlocked = tl == Tile.BLOCKED;
+		topRightBlocked = tr == Tile.BLOCKED;
+		bottomLeftBlocked = bl == Tile.BLOCKED;
+		bottomRightBlocked = br == Tile.BLOCKED;
+		topLeftSemiBlocked = tl == Tile.SEMIBLOCKED;
+		topRightSemiBlocked = tr == Tile.SEMIBLOCKED;
+		bottomLeftSemiBlocked = bl == Tile.SEMIBLOCKED;
+		bottomRightSemiBlocked = br == Tile.SEMIBLOCKED;
 	}
 
 	/**

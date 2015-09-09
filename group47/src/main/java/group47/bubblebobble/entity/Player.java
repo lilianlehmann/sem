@@ -51,8 +51,10 @@ public class Player extends MapObject {
 	 */
 	public Player(TileMap tm) {
 		super(tm);
-		width = 30;
-		height = 30;
+		width = 3;
+		// height of player must be bigger than tile height, else the player can
+		// come stuck between platform tiles
+		height = 31;
 		cwidth = 30;
 		cheight = 30;
 		movSpeed = 0.3;
