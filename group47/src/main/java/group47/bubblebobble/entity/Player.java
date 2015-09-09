@@ -73,6 +73,11 @@ public class Player extends MapObject {
 			if(lastFireTime + fireDelay < System.currentTimeMillis()) {
 				lastFireTime = System.currentTimeMillis();
 				Projectile projectile = new Projectile(tileMap);
+				if(facingRight) {
+					projectile.dx = 5;
+				} else {
+					projectile.dx = -5;
+				}
 				projectile.setPosition(x, y);
 				projectiles.add(projectile);
 			}
@@ -85,11 +90,13 @@ public class Player extends MapObject {
 	 */
 	public void getNextPosition() {
 		if(left) { //If move left is pressed
+			facingRight = false;
 			dx -= movSpeed;
 			if(dx < -maxSpeed)
 				dx = -maxSpeed;
 		}
 		else if(right) { //If move right is pressed
+			facingRight = true;
 			dx += movSpeed;
 			if(dx > maxSpeed)
 				dx = maxSpeed;
