@@ -93,8 +93,14 @@ public class Level1State extends GameState {
 					// kill enemy
 					enemies.remove(i);
 				} else {
+
 					// kill player
 					System.out.println("Player Should die now");
+
+					// kill player
+					gsm.setState(GameStateManager.GAMEOVER);
+					return;
+
 				}
 			}
 		}
