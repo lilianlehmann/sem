@@ -11,9 +11,7 @@ public class Player extends MapObject {
 	
 	private int health;
 	private int maxHealth;
-	
-	private BufferedImage sprite;
-	
+		
 	public Player(TileMap tm) {
 		super(tm);
 		width = 30;
@@ -97,12 +95,7 @@ public class Player extends MapObject {
 	 */
 	public void draw(Graphics2D g) {
 		//draw player
-		g.drawImage(
-				sprite, 
-				(int) (x - width / 2), 
-				(int) (y - height / 2), 
-				null
-		);
+		super.draw(g);
 	}
 	
 }

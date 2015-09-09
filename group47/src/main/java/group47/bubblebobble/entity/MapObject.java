@@ -1,6 +1,9 @@
 package group47.bubblebobble.entity;
 
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+
 import group47.bubblebobble.tilemap.*;
 
 /**
@@ -59,6 +62,9 @@ public abstract class MapObject {
 	protected double maxFallSpeed;
 	protected double jumpStart;
 	protected double stopJumpSpeed;
+	
+	//graphcis
+	protected BufferedImage sprite;
 	
 	/**
 	 * Constructor
@@ -203,4 +209,14 @@ public abstract class MapObject {
 	public void setRight(boolean b) { right = b; }
 	public void setUp(boolean b) { up = b; }
 	public void setDown(boolean b) { down = b; }
+	
+	public void draw(Graphics2D g) {
+		g.drawImage(
+				sprite, 
+				(int) (x - width / 2), 
+				(int) (y - height / 2), 
+				null
+		);
+	}
+	
 }

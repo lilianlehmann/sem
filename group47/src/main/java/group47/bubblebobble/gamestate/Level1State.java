@@ -3,10 +3,12 @@ package group47.bubblebobble.gamestate;
 import group47.bubblebobble.main.GamePanel;
 import group47.bubblebobble.tilemap.TileMap;
 import group47.bubblebobble.entity.*;
+import group47.bubblebobble.entity.enemies.Level1Enemy;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * The Class Level1State.
@@ -14,6 +16,7 @@ import java.awt.event.KeyEvent;
 public class Level1State extends GameState {
 	
 	private Player player;
+	private ArrayList<Enemy> enemies;
 	
 	/** The tile map. */
 	private TileMap tileMap;
@@ -41,6 +44,12 @@ public class Level1State extends GameState {
 		tileMap.loadMap("/Maps/level1-2.map");
 		player = new Player(tileMap);
 		player.setPosition(100d, 100d);
+		
+		enemies = new ArrayList<Enemy>();
+		Level1Enemy e;
+		e = new Level1Enemy(tileMap);
+		e.setPosition(300d, 100d);
+		enemies.add(e);
 	}
 
 	/*
@@ -49,6 +58,11 @@ public class Level1State extends GameState {
 	@Override
 	public void update() {
 		player.update();
+		
+		//update all enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).update();
+		}
 	}
 
 	/*
@@ -64,6 +78,11 @@ public class Level1State extends GameState {
 		// draw tilemap
 		tileMap.draw(g);
 		player.draw(g);
+		
+		//draw all enemies
+		for(int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).draw(g);
+		}
 	}
 
 	/*
