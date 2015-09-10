@@ -203,6 +203,12 @@ public abstract class MapObject {
 
 		// Check for collisions in the y direction
 		calculateCorners(x, ydest);
+		
+		if(this.getClass() == Player.class) {
+			System.out.println("Blocked tl: " + topLeftBlocked + ", tr: " + topRightBlocked + ", bl: " + bottomLeftBlocked + ", br: " + bottomRightBlocked);
+			System.out.println("SemiBlocked tl: " + topLeftSemiBlocked + ", tr: " + topRightSemiBlocked + ", bl: " + bottomLeftSemiBlocked + ", br: " + bottomRightSemiBlocked);
+		}
+		
 		// If we are moving upwards
 		if (dy < 0) {
 			// And our topLeft or topRight corner is
@@ -241,7 +247,6 @@ public abstract class MapObject {
 				//
 				ytemp = (currRow + 1) * tileSize - cheight / 2;
 			}
-
 			// If we are not colliding
 			else {
 				// Our y vector is added to our temporary y position
@@ -256,7 +261,7 @@ public abstract class MapObject {
 		if (dx < 0) {
 			// And we are colliding on the left
 
-			if (topLeftBlocked || bottomLeftBlocked) {
+			if (topLeftBlocked) {
 				// Our horizontal movement vector becomes 0
 				dx = 0;
 
@@ -277,7 +282,7 @@ public abstract class MapObject {
 		// If we are moving to the right
 		else if (dx > 0) {
 			// And we are colliding on the right
-			if (topRightBlocked || bottomRightBlocked) {
+			if (topRightBlocked) {
 				// Our horizontal movement vector becomes 0
 				dx = 0;
 
@@ -318,9 +323,9 @@ public abstract class MapObject {
 	 */
 	public void calculateCorners(double x, double y) {
 		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
+		int rightTile = (int) (x - cwidth / 2 + cwidth) / tileSize;
 		int topTile = (int) (y - cheight / 2) / tileSize;
-		int bottomTile = (int) (y + cheight / 2 - 1) / tileSize;
+		int bottomTile = (int) (y - cheight / 2 + cheight) / tileSize;
 
 		int tl = tileMap.getType(topTile, leftTile);
 		int tr = tileMap.getType(topTile, rightTile);
