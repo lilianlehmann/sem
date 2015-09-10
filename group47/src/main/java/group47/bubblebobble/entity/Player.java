@@ -25,9 +25,6 @@ public class Player extends MapObject {
 	/** The extra live. */
 	private int extraLive;
 
-	/** The is alive. */
-	private boolean isAlive;
-
 	/** The flinching. */
 	private boolean flinching;
 
@@ -51,19 +48,19 @@ public class Player extends MapObject {
 	 */
 	public Player(TileMap tm) {
 		super(tm);
-		width = 30;
+		width = 38;
 		// height of player must be bigger than tile height, else the player can
 		// come stuck between platform tiles
-		height = 30;
-		cwidth = 30;
-		cheight = 31;
-		movSpeed = 0.3;
+		height = 32;
+		cwidth = 38;
+		cheight = 32;
+		movSpeed = 2.5;
 		maxSpeed = 2.5;
-		stopSpeed = .4;
+		stopSpeed = 2.5;
 
-		fallSpeed = .15;
-		maxFallSpeed = 4.0;
-		jumpStart = -7;
+		fallSpeed = .35;
+		maxFallSpeed = 6.0;
+		jumpStart = -10;
 		stopJumpSpeed = .3;
 
 		facingRight = true;
@@ -77,8 +74,8 @@ public class Player extends MapObject {
 		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/Tiles/Bubble_Tile.gif"));
-			sprite = spritesheet.getSubimage(0, 30, 30, 30);
+					.getResourceAsStream("/Player/player.png"));
+			sprite = spritesheet.getSubimage(0, 0, 38, 32);
 		}
 
 		catch (Exception e) {
@@ -100,8 +97,15 @@ public class Player extends MapObject {
 	 * and then puts the player in the new position
 	 */
 	public void update() {
-		for (int i = 0; i < projectiles.size(); i++)
-			projectiles.get(i).update();
+		for (int i = 0; i < projectiles.size(); i++) {
+			if(projectiles.get(i).getIsAlive()) {
+				projectiles.get(i).update();
+			}
+			else {
+				projectiles.remove(i);
+				i--;
+			}
+		}
 
 		getNextPosition();
 		checkTileMapCollision();
@@ -112,6 +116,8 @@ public class Player extends MapObject {
 				lastFireTime = System.currentTimeMillis();
 				Projectile projectile = new Projectile(tileMap);
 				projectile.setPosition(x, y);
+				if(!facingRight)
+					projectile.dx *= -1;
 				projectiles.add(projectile);
 			}
 		}
@@ -166,8 +172,21 @@ public class Player extends MapObject {
 			if (dx > maxSpeed)
 				dx = maxSpeed;
 		} else {
-			dx = 0;
+			if(dx > 0) {
+				dx -= stopSpeed;
+				if(dx < 0)
+					dx = 0;
+			} else if(dx < 0) {
+				dx += stopSpeed;
+				if(dx > 0)
+					dx = 0;
+			}
 		}
+		
+		if(dx > 0)
+			facingRight = true;
+		else if(dx < 0)
+			facingRight = false;
 
 		if (up)
 			jumping = true; // If jump is pressed
@@ -215,15 +234,6 @@ public class Player extends MapObject {
 	 */
 	public int getMaxLives() {
 		return maxLives;
-	}
-
-	/**
-	 * Gets the checks if is alive.
-	 *
-	 * @return the checks if is alive
-	 */
-	public boolean getIsAlive() {
-		return isAlive;
 	}
 
 	/**

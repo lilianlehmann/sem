@@ -146,6 +146,9 @@ public abstract class MapObject {
 	/** The stop jump speed. */
 	protected double stopJumpSpeed;
 
+	/** The is alive. */
+	protected boolean isAlive;
+	
 	// GRAPHICS
 	/** The sprite. */
 	protected BufferedImage sprite;
@@ -235,8 +238,8 @@ public abstract class MapObject {
 
 				// Our new position becomes just on top of the tile we are
 				// colliding with
+				//
 				ytemp = (currRow + 1) * tileSize - cheight / 2;
-
 			}
 
 			// If we are not colliding
@@ -342,7 +345,19 @@ public abstract class MapObject {
 	 *            the g
 	 */
 	public void draw(Graphics2D g) {
-		g.drawImage(sprite, (int) (x - width / 2), (int) (y - height / 2), null);
+		if(facingRight)
+			g.drawImage(sprite, (int) (x - width / 2), (int) (y - height / 2), null);
+		else
+			g.drawImage(sprite, (int) (x + width / 2), (int) (y - height / 2), -width, height, null);
+	}
+	
+	/**
+	 * Gets the checks if is alive.
+	 *
+	 * @return the checks if is alive
+	 */
+	public boolean getIsAlive() {
+		return isAlive;
 	}
 
 	/**

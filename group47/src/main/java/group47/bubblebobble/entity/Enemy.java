@@ -6,10 +6,7 @@ import group47.bubblebobble.tilemap.TileMap;
  * The Class Enemy.
  */
 public class Enemy extends MapObject {
-
-	/** The dead. */
-	protected boolean dead;
-
+	
 	/** The caught. */
 	protected boolean caught;
 
@@ -27,15 +24,6 @@ public class Enemy extends MapObject {
 	 */
 	public Enemy(TileMap tm) {
 		super(tm);
-	}
-
-	/**
-	 * Checks if is dead.
-	 *
-	 * @return true, if is dead
-	 */
-	public boolean isDead() {
-		return dead;
 	}
 
 	/**
