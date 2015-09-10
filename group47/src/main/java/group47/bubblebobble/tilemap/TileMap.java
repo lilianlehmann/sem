@@ -52,6 +52,8 @@ public class TileMap {
 	/** The num tiles across. */
 	private int numTilesAcross;
 
+	private int numTilesLength;
+
 	/** The tiles. */
 	private Tile[][] tiles;
 
@@ -91,14 +93,17 @@ public class TileMap {
 
 			// 2 tiles across
 			numTilesAcross = tileset.getWidth() / tileSize;
+			numTilesLength = tileset.getHeight() / tileSize;
 
 			// Creates a matrix from the tilesheet
-			tiles = new Tile[2][numTilesAcross];
+			tiles = new Tile[numTilesLength][numTilesAcross];
 
 			BufferedImage subimage;
 
 			// first row of tiles becomes normal typed (not able to collide)
-			// second row of tiles becomes blocked typed (able to collide)
+			// second row of tiles becomes semiblocked typed (able to collide on
+			// top)
+			// third row of tiles becomes blocked typed (able to collide)
 			for (int col = 0; col < numTilesAcross; col++) {
 				// gets the image based on its position inside the .gif
 				subimage = tileset.getSubimage(col * tileSize, 0, tileSize,
@@ -106,7 +111,10 @@ public class TileMap {
 				tiles[0][col] = new Tile(subimage, Tile.NORMAL);
 				subimage = tileset.getSubimage(col * tileSize, tileSize,
 						tileSize, tileSize);
-				tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
+				tiles[1][col] = new Tile(subimage, Tile.SEMIBLOCKED);
+				subimage = tileset.getSubimage(col * tileSize, tileSize,
+						tileSize, tileSize);
+				tiles[2][col] = new Tile(subimage, Tile.BLOCKED);
 
 			}
 

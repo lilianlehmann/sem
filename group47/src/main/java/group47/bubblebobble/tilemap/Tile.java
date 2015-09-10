@@ -21,7 +21,10 @@ public class Tile {
 
 	// second row
 	/** The Constant BLOCKED. */
-	public static final int BLOCKED = 1;
+	public static final int SEMIBLOCKED = 1;
+
+	// third row
+	public static final int BLOCKED = 2;
 
 	/**
 	 * Instantiates a new tile.

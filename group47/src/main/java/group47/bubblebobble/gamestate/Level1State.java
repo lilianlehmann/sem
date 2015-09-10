@@ -43,7 +43,7 @@ public class Level1State extends GameState {
 
 		// tile width/ height of 30px
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tiles/Bubble_Tile.gif");
+		tileMap.loadTiles("/Tiles/Bubble_Tile2.gif");
 		tileMap.loadMap("/Maps/level1-2.map");
 		player = new Player(tileMap);
 		player.setPosition(100d, 100d);
