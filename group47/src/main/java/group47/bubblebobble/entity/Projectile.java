@@ -9,13 +9,20 @@ import javax.imageio.ImageIO;
 
 public class Projectile extends MapObject {
 	
+	int lifeTime; //ms
+	long lastUpdateTime;
+	
 	public Projectile(TileMap tm) {
 		super(tm);
+		isAlive = true;
 		width = 20;
 		height = 20;
 		cwidth = 20;
 		cheight = 20;
 		dx = 5;
+		
+		lifeTime = 1500;
+		lastUpdateTime = System.currentTimeMillis();
 		
 		//Load sprite
 		try {
@@ -36,6 +43,13 @@ public class Projectile extends MapObject {
 	}
 	
 	public void update() {
+		lifeTime -= System.currentTimeMillis() - lastUpdateTime;
+		lastUpdateTime = System.currentTimeMillis();
+		if(lifeTime <= 0) {
+			isAlive = false;
+			return;
+		}
+		
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 	}
