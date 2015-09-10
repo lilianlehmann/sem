@@ -9,8 +9,11 @@ import javax.imageio.ImageIO;
 
 public class Projectile extends MapObject {
 	
-	int lifeTime; //ms
-	long lastUpdateTime;
+	private int lifeTime; //ms
+	private int floatDelay;
+	private long lastUpdateTime;
+	private boolean floating;
+	private double floatSpeed;
 	
 	public Projectile(TileMap tm) {
 		super(tm);
@@ -21,8 +24,11 @@ public class Projectile extends MapObject {
 		cheight = 20;
 		dx = 5;
 		
-		lifeTime = 1500;
+		lifeTime = 7500;
+		floatDelay = 700;
 		lastUpdateTime = System.currentTimeMillis();
+		floating = false;
+		floatSpeed = .1;
 		
 		//Load sprite
 		try {
@@ -43,8 +49,14 @@ public class Projectile extends MapObject {
 	}
 	
 	public void update() {
-		lifeTime -= System.currentTimeMillis() - lastUpdateTime;
+		long timePassed = System.currentTimeMillis() - lastUpdateTime;
+		floatDelay -= timePassed;
+		lifeTime -= timePassed;
 		lastUpdateTime = System.currentTimeMillis();
+		if(floatDelay <= 0) {
+			dx = 0;
+			dy -= floatSpeed;
+		}
 		if(lifeTime <= 0) {
 			isAlive = false;
 			return;

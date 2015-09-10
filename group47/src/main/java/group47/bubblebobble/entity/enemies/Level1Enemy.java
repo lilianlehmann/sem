@@ -25,14 +25,18 @@ public class Level1Enemy extends Enemy {
 		maxSpeed = 1.6;
 		stopSpeed = .4;
 
-		fallSpeed = .5;
+		fallSpeed = .35;
 		floatSpeed = .1;
-		maxFallSpeed = 4.0;
-		jumpStart = -4.8;
+		maxFallSpeed = 6.0;
+		jumpStart = -10.0;
 		stopJumpSpeed = .3;
-
+		
 		facingRight = true;
-
+		if(Math.round(Math.random()) == 0)
+			left = true;
+		else
+			right = true;
+		
 		// Load sprite
 
 		try {
@@ -48,10 +52,59 @@ public class Level1Enemy extends Enemy {
 	}
 
 	private void getNextPosition() {
-		dx = 0;
+		double dice = Math.random() * 1000;
+		if(dice < 5) {
+			up = true;
+		} 
+		else if(dice < 15) {
+			left = true;
+			right = false;
+			up = false;
+		}
+		else if(dice < 25) {
+			left = false;
+			right = true;
+			up = false;
+		} else {
+			up = false;
+		}
+
+		if (left) { // If move left is pressed
+			dx -= movSpeed;
+			if (dx < -maxSpeed)
+				dx = -maxSpeed;
+		} else if (right) { // If move right is pressed
+			dx += movSpeed;
+			if (dx > maxSpeed)
+				dx = maxSpeed;
+		} else {
+			if(dx > 0) {
+				dx -= stopSpeed;
+				if(dx < 0)
+					dx = 0;
+			} else if(dx < 0) {
+				dx += stopSpeed;
+				if(dx > 0)
+					dx = 0;
+			}
+		}
+		
+		if(dx > 0)
+			facingRight = true;
+		else if(dx < 0)
+			facingRight = false;
+
+		if (up)
+			jumping = true; // If jump is pressed
+
+		if (jumping && !falling) {
+			dy = jumpStart;
+			falling = true;
+		}		
 
 		if (caught) {
 			dy -= floatSpeed;
+			dx = 0;
 		} else if (falling) {
 			dy += fallSpeed;
 			if (dy > 0)
