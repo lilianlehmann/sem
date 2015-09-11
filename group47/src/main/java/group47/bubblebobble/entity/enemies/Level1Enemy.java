@@ -23,7 +23,6 @@ public class Level1Enemy extends Enemy {
 	 *            the tm
 	 */
 	public Level1Enemy(TileMap tm) {
-
 		super(tm);
 
 		scorePoints = 100;
