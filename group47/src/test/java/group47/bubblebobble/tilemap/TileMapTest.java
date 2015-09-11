@@ -2,13 +2,11 @@ package group47.bubblebobble.tilemap;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Graphics2D;
 import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
@@ -19,10 +17,6 @@ public class TileMapTest {
 
 	/** The tile map. */
 	private TileMap tileMap;
-
-	/** The g. */
-	@Mock
-	private Graphics2D g;
 
 	/** The tile size. */
 	private int tileSize = 30;

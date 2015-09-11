@@ -109,7 +109,6 @@ public class Player extends MapObject {
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		System.out.println("Pos: x" + x + " y" + y);
 
 		if (down) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
@@ -171,16 +170,22 @@ public class Player extends MapObject {
 			dx += movSpeed;
 			if (dx > maxSpeed)
 				dx = maxSpeed;
-		} else {
-			if (dx > 0) {
-				dx -= stopSpeed;
-				if (dx < 0)
-					dx = 0;
-			} else if (dx < 0) {
-				dx += stopSpeed;
-				if (dx > 0)
-					dx = 0;
-			}
+		}
+
+		else {
+			dx = 0;
+
+			// FOR FUTURE SLIDING CONTROLS
+
+			// if (dx > 0) {
+			// dx -= stopSpeed;
+			// if (dx < 0)
+			// dx = 0;
+			// } else if (dx < 0) {
+			// dx += stopSpeed;
+			// if (dx > 0)
+			// dx = 0;
+			// }
 		}
 
 		if (dx > 0)
@@ -267,4 +272,37 @@ public class Player extends MapObject {
 	public int getExtraLive() {
 		return extraLive;
 	}
+
+	public void setFlinch(boolean b) {
+		flinching = b;
+	}
+
+	public double getMovSpeed() {
+		return movSpeed;
+	}
+
+	public void setMovSpeed(double movSpeed) {
+		this.movSpeed = movSpeed;
+	}
+
+	public double getMaxSpeed() {
+		return maxSpeed;
+	}
+
+	public void setMaxSpeed(double maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
+
+	public void setFallSpeed(double fallSpeed) {
+		this.fallSpeed = fallSpeed;
+	}
+
+	public boolean getJumping() {
+		return jumping;
+	}
+
+	public void setFalling(boolean fall) {
+		falling = fall;
+	}
+
 }

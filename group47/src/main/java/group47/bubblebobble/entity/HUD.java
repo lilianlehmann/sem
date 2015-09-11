@@ -2,7 +2,7 @@ package group47.bubblebobble.entity;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -46,7 +46,7 @@ public class HUD {
 	 * @param g
 	 *            the g
 	 */
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 
 		// Draw the number of lives the player has
 		for (int i = 0; i < player.getLives(); i++) {

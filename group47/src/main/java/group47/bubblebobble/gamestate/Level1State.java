@@ -100,7 +100,7 @@ public class Level1State extends GameState {
 
 				} else {
 					// kill player
-					System.out.println(player.getIsAlive());
+
 					gsm.setState(GameStateManager.GAMEOVER);
 					return;
 
