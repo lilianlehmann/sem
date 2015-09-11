@@ -90,4 +90,11 @@ public class GameStateManager {
 		gameStates.get(currentState).keyReleased(k);
 	}
 
+	/*
+	 * Returns current gameState
+	 * @return current gameState
+	 */
+	public int getCurrentState() {
+		return currentState;
+	}
 }
