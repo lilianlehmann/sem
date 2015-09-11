@@ -98,10 +98,9 @@ public class Player extends MapObject {
 	 */
 	public void update() {
 		for (int i = 0; i < projectiles.size(); i++) {
-			if(projectiles.get(i).getIsAlive()) {
+			if (projectiles.get(i).getIsAlive()) {
 				projectiles.get(i).update();
-			}
-			else {
+			} else {
 				projectiles.remove(i);
 				i--;
 			}
@@ -110,13 +109,14 @@ public class Player extends MapObject {
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
+		System.out.println("Pos: x" + x + " y" + y);
 
 		if (down) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				lastFireTime = System.currentTimeMillis();
 				Projectile projectile = new Projectile(tileMap);
 				projectile.setPosition(x, y);
-				if(!facingRight)
+				if (!facingRight)
 					projectile.dx *= -1;
 				projectiles.add(projectile);
 			}
@@ -172,20 +172,20 @@ public class Player extends MapObject {
 			if (dx > maxSpeed)
 				dx = maxSpeed;
 		} else {
-			if(dx > 0) {
+			if (dx > 0) {
 				dx -= stopSpeed;
-				if(dx < 0)
+				if (dx < 0)
 					dx = 0;
-			} else if(dx < 0) {
+			} else if (dx < 0) {
 				dx += stopSpeed;
-				if(dx > 0)
+				if (dx > 0)
 					dx = 0;
 			}
 		}
-		
-		if(dx > 0)
+
+		if (dx > 0)
 			facingRight = true;
-		else if(dx < 0)
+		else if (dx < 0)
 			facingRight = false;
 
 		if (up)

@@ -225,6 +225,10 @@ public class TileMap {
 	 */
 	public int getType(int row, int col) {
 		// returns the value inside the multidimensional array e.g. tile 2
+
+		if (row >= this.getNumRows() || row < 0 || col >= this.getNumCols() || col < 0) {
+			return Tile.NORMAL;
+		}
 		int rc = map[row][col];
 
 		// 2 / 2 = 1

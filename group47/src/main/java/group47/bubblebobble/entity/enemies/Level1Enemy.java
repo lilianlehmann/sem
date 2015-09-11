@@ -8,10 +8,20 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The Class Level1Enemy.
+ */
 public class Level1Enemy extends Enemy {
 
+	/** The spritesheet. */
 	BufferedImage spritesheet;
 
+	/**
+	 * Instantiates a new level1 enemy.
+	 *
+	 * @param tm
+	 *            the tm
+	 */
 	public Level1Enemy(TileMap tm) {
 
 		super(tm);
@@ -30,13 +40,13 @@ public class Level1Enemy extends Enemy {
 		maxFallSpeed = 6.0;
 		jumpStart = -10.0;
 		stopJumpSpeed = .3;
-		
+
 		facingRight = true;
-		if(Math.round(Math.random()) == 0)
+		if (Math.round(Math.random()) == 0)
 			left = true;
 		else
 			right = true;
-		
+
 		// Load sprite
 
 		try {
@@ -51,17 +61,20 @@ public class Level1Enemy extends Enemy {
 
 	}
 
+	/**
+	 * Gets the next position.
+	 *
+	 * @return the next position
+	 */
 	private void getNextPosition() {
 		double dice = Math.random() * 1000;
-		if(dice < 5) {
+		if (dice < 5) {
 			up = true;
-		} 
-		else if(dice < 15) {
+		} else if (dice < 15) {
 			left = true;
 			right = false;
 			up = false;
-		}
-		else if(dice < 25) {
+		} else if (dice < 25) {
 			left = false;
 			right = true;
 			up = false;
@@ -78,20 +91,20 @@ public class Level1Enemy extends Enemy {
 			if (dx > maxSpeed)
 				dx = maxSpeed;
 		} else {
-			if(dx > 0) {
+			if (dx > 0) {
 				dx -= stopSpeed;
-				if(dx < 0)
+				if (dx < 0)
 					dx = 0;
-			} else if(dx < 0) {
+			} else if (dx < 0) {
 				dx += stopSpeed;
-				if(dx > 0)
+				if (dx > 0)
 					dx = 0;
 			}
 		}
-		
-		if(dx > 0)
+
+		if (dx > 0)
 			facingRight = true;
-		else if(dx < 0)
+		else if (dx < 0)
 			facingRight = false;
 
 		if (up)
@@ -100,7 +113,7 @@ public class Level1Enemy extends Enemy {
 		if (jumping && !falling) {
 			dy = jumpStart;
 			falling = true;
-		}		
+		}
 
 		if (caught) {
 			dy -= floatSpeed;
@@ -118,6 +131,9 @@ public class Level1Enemy extends Enemy {
 		}
 	}
 
+	/*
+	 * Update
+	 */
 	@Override
 	public void update() {
 
@@ -128,11 +144,17 @@ public class Level1Enemy extends Enemy {
 
 	}
 
+	/*
+	 * Draw
+	 */
 	@Override
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}
 
+	/*
+	 * SetCaught
+	 */
 	@Override
 	public void setCaught() {
 		caught = true;
