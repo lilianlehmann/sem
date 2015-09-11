@@ -36,8 +36,8 @@ public class Projectile extends MapObject {
 	public Projectile(TileMap tm) {
 		super(tm);
 		isAlive = true;
-		width = 20;
-		height = 20;
+		width = 32;
+		height = 32;
 		cwidth = 20;
 		cheight = 20;
 		dx = 5;
@@ -51,20 +51,13 @@ public class Projectile extends MapObject {
 		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/Tiles/Bubble_Tile.gif"));
-			sprite = spritesheet.getSubimage(0, 30, 30, 30);
-		} catch (Exception e) {
+					.getResourceAsStream("/Player/bubbles.png"));
+			sprite = spritesheet.getSubimage(96, 0, 32, 32);
+		}
+
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/*
-	 * Draw projectile
-	 */
-	@Override
-	public void draw(Graphics2D g) {
-		g.drawImage(sprite, (int) (x - width / 2), (int) (y - height / 2),
-				width, height, null);
 	}
 
 	/**
