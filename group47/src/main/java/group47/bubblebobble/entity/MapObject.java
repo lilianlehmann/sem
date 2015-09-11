@@ -203,15 +203,6 @@ public abstract class MapObject {
 
 		calculateCorners(x, ydest);
 
-		// if(this.getClass() == Player.class) {
-		// System.out.println("Blocked tl: " + topLeftBlocked + ", tr: " +
-		// topRightBlocked + ", bl: " + bottomLeftBlocked + ", br: " +
-		// bottomRightBlocked);
-		// System.out.println("SemiBlocked tl: " + topLeftSemiBlocked + ", tr: "
-		// + topRightSemiBlocked + ", bl: " + bottomLeftSemiBlocked + ", br: " +
-		// bottomRightSemiBlocked);
-		// }
-
 		// If we are moving upwards
 		if (dy < 0) {
 			// And our topLeft or topRight corner is
@@ -491,6 +482,14 @@ public abstract class MapObject {
 	 */
 	public void setDown(boolean b) {
 		down = b;
+	}
+
+	public double getDx() {
+		return dx;
+	}
+
+	public double getDy() {
+		return dy;
 	}
 
 }
