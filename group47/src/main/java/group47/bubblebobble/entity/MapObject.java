@@ -24,16 +24,16 @@ public abstract class MapObject {
 
 	// POSITION AND VECTOR
 
-	/** The x. */
+	/** The actual x position. */
 	protected double x;
 
-	/** The y. */
+	/** The actual y position. */
 	protected double y;
 
-	/** The dx. */
+	/** Vector in x direction. */
 	protected double dx;
 
-	/** The dy. */
+	/** Vector in y direction. */
 	protected double dy;
 
 	// SPRITE DIMENSION
@@ -58,16 +58,16 @@ public abstract class MapObject {
 	/** The curr col. */
 	protected int currCol;
 
-	/** The xdest. */
+	/** The xdest: x position + x vector(x+dx). */
 	protected double xdest;
 
-	/** The ydest. */
+	/** The ydest: y position + y vector(y+dy). */
 	protected double ydest;
 
-	/** The xtemp. */
+	/** The xtemp: Helper variable used in physics calculation. */
 	protected double xtemp;
 
-	/** The ytemp. */
+	/** The ytemp. Helper variable used in physics calculation. */
 	protected double ytemp;
 
 	/** The top left. */
@@ -148,7 +148,7 @@ public abstract class MapObject {
 
 	/** The is alive. */
 	protected boolean isAlive;
-	
+
 	// GRAPHICS
 	/** The sprite. */
 	protected BufferedImage sprite;
@@ -189,7 +189,7 @@ public abstract class MapObject {
 	 * modifies xtemp and ytemp so that they don't intersect with the tileMap.
 	 */
 	public void checkTileMapCollision() {
-		// Determine current collum and row
+		// Determine current column and row
 		currCol = (int) x / tileSize;
 		currRow = (int) y / tileSize;
 
@@ -201,14 +201,17 @@ public abstract class MapObject {
 		xtemp = x;
 		ytemp = y;
 
-		// Check for collisions in the y direction
 		calculateCorners(x, ydest);
-		
-		if(this.getClass() == Player.class) {
-			System.out.println("Blocked tl: " + topLeftBlocked + ", tr: " + topRightBlocked + ", bl: " + bottomLeftBlocked + ", br: " + bottomRightBlocked);
-			System.out.println("SemiBlocked tl: " + topLeftSemiBlocked + ", tr: " + topRightSemiBlocked + ", bl: " + bottomLeftSemiBlocked + ", br: " + bottomRightSemiBlocked);
-		}
-		
+
+		// if(this.getClass() == Player.class) {
+		// System.out.println("Blocked tl: " + topLeftBlocked + ", tr: " +
+		// topRightBlocked + ", bl: " + bottomLeftBlocked + ", br: " +
+		// bottomRightBlocked);
+		// System.out.println("SemiBlocked tl: " + topLeftSemiBlocked + ", tr: "
+		// + topRightSemiBlocked + ", bl: " + bottomLeftSemiBlocked + ", br: " +
+		// bottomRightSemiBlocked);
+		// }
+
 		// If we are moving upwards
 		if (dy < 0) {
 			// And our topLeft or topRight corner is
@@ -251,6 +254,9 @@ public abstract class MapObject {
 			else {
 				// Our y vector is added to our temporary y position
 				ytemp += dy;
+				if (ytemp >= tileMap.getHeight() - 15) {
+					ytemp = 3 * tileMap.getTileSize();
+				}
 			}
 		}
 
@@ -323,7 +329,7 @@ public abstract class MapObject {
 	 */
 	public void calculateCorners(double x, double y) {
 		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x - cwidth / 2 + cwidth) / tileSize;
+		int rightTile = (int) (x - cwidth / 2 + cwidth - 1) / tileSize;
 		int topTile = (int) (y - cheight / 2) / tileSize;
 		int bottomTile = (int) (y - cheight / 2 + cheight) / tileSize;
 
@@ -350,12 +356,14 @@ public abstract class MapObject {
 	 *            the g
 	 */
 	public void draw(Graphics2D g) {
-		if(facingRight)
-			g.drawImage(sprite, (int) (x - width / 2), (int) (y - height / 2), null);
+		if (facingRight)
+			g.drawImage(sprite, (int) (x - width / 2), (int) (y - height / 2),
+					null);
 		else
-			g.drawImage(sprite, (int) (x + width / 2), (int) (y - height / 2), -width, height, null);
+			g.drawImage(sprite, (int) (x + width / 2), (int) (y - height / 2),
+					-width, height, null);
 	}
-	
+
 	/**
 	 * Gets the checks if is alive.
 	 *

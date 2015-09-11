@@ -97,7 +97,6 @@ public class Level1State extends GameState {
 
 					// player loses a life
 					player.hit(1);
-					System.out.println("Lost a life");
 
 				} else {
 					// kill player
