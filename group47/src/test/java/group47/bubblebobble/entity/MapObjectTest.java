@@ -1,21 +1,24 @@
 package group47.bubblebobble.entity;
 
 import static org.junit.Assert.*;
+
+import java.awt.Rectangle;
+
 import group47.bubblebobble.tilemap.TileMap;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito.*;
+import org.mockito.Mockito;
 
 public abstract class MapObjectTest {
   
-  private TileMap tileMap;
+  protected TileMap tileMap;
   
   private int tileSize = 30;
   private int numOfCols = 5;
   private int numOfRows = 5;
-  
-  private MapObject object;
   
   @Before
   public void setUp() throws Exception {
@@ -29,8 +32,29 @@ public abstract class MapObjectTest {
   }
 
   @Test
-  public void test() {
-    fail("Not yet implemented");
-  }
+  public void testIntersectFalse() {
+    MapObject o1 = Mockito.mock(MapObject.class, Mockito.CALLS_REAL_METHODS);
+    Mockito.when(o1.getRectangle()).thenReturn(new Rectangle(
+        30, 30, 30, 30
+        ));
+    MapObject o2 = Mockito.mock(MapObject.class, Mockito.CALLS_REAL_METHODS);
+    Mockito.when(o1.getRectangle()).thenReturn(new Rectangle(
+        60, 60, 30, 30
+        ));
+    assertFalse(o1.intersects(o2));
+  };
+  
+  @Test
+  public void testIntersectTrue() {
+    MapObject o1 = Mockito.mock(MapObject.class, Mockito.CALLS_REAL_METHODS);
+    Mockito.when(o1.getRectangle()).thenReturn(new Rectangle(
+        30, 30, 30, 30
+        ));
+    MapObject o2 = Mockito.mock(MapObject.class, Mockito.CALLS_REAL_METHODS);
+    Mockito.when(o1.getRectangle()).thenReturn(new Rectangle(
+        30, 30, 30, 30
+        ));
+    assertTrue(o1.intersects(o2));
+  };
 
 }
