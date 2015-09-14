@@ -63,7 +63,6 @@ public class MenuState extends GameState {
 	 */
 	@Override
 	public void update() {
-		// bg.update();
 	}
 
 	/*
@@ -73,7 +72,7 @@ public class MenuState extends GameState {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		
+
 		// draw the background image
 		int x = (GamePanel.WIDTH - image.getWidth(null)) / 2;
 		int y = (GamePanel.HEIGHT - image.getHeight(null)) / 5;
