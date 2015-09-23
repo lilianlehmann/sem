@@ -49,6 +49,7 @@ public class Level1Enemy extends Enemy {
 		// Load sprite
 
 		try {
+			System.out.println(getClass().getResource("").getPath());
 			spritesheet = ImageIO.read(getClass().getResourceAsStream(
 					"/Enemies/Level1.gif"));
 			sprite = spritesheet.getSubimage(0, 0, 30, 30);
@@ -61,7 +62,7 @@ public class Level1Enemy extends Enemy {
 	}
 
 	/**
-	 * Gets the next position.
+	 * Gets the next position of the enemy, based on a randomized move set.
 	 *
 	 * @return the next position
 	 */

@@ -49,21 +49,22 @@ public class Level1State extends GameState {
 		player.setPosition(100d, 100d);
 
 		enemies = new ArrayList<Enemy>();
-		Level1Enemy e1;
-		Level1Enemy e2;
-		Level1Enemy e3;
-		Level1Enemy e4;
-		Level1Enemy e5;
-		e1 = new Level1Enemy(tileMap);
-		e2 = new Level1Enemy(tileMap);
-		e3 = new Level1Enemy(tileMap);
-		e4 = new Level1Enemy(tileMap);
-		e5 = new Level1Enemy(tileMap);
+
+		// creates 5 Level1Enemy objects
+		Level1Enemy e1 = new Level1Enemy(tileMap);
+		Level1Enemy e2 = new Level1Enemy(tileMap);
+		Level1Enemy e3 = new Level1Enemy(tileMap);
+		Level1Enemy e4 = new Level1Enemy(tileMap);
+		Level1Enemy e5 = new Level1Enemy(tileMap);
+
+		// sets the spawning position of each enemy
 		e1.setPosition(300d, 100d);
 		e2.setPosition(500d, 100d);
 		e3.setPosition(300d, 250d);
 		e4.setPosition(500d, 400d);
 		e5.setPosition(100d, 550d);
+
+		// adds the enemies to the arraylist
 		enemies.add(e1);
 		enemies.add(e2);
 		enemies.add(e3);
@@ -75,7 +76,8 @@ public class Level1State extends GameState {
 	}
 
 	/*
-	 * Update
+	 * Update Updates the enemies, checks the collisions between player /
+	 * projectiles and enemies
 	 */
 	@Override
 	public void update() {
@@ -90,9 +92,15 @@ public class Level1State extends GameState {
 		for (int i = 0; i < enemies.size(); i++) {
 			if (player.intersects(enemies.get(i))) {
 				if (enemies.get(i).isCaught()) {
-					// kill enemy
+					// kill enemy and increase highscore
 					player.setScore(enemies.get(i).getScorePoints());
 					enemies.remove(i);
+
+					// // go to level 2
+					// if (enemies.size() == 0) {
+					// gsm.setState(GameStateManager.LEVEL2STATE);
+					// }
+
 				} else if (player.getLives() > 1) {
 
 					// player loses a life
@@ -111,8 +119,10 @@ public class Level1State extends GameState {
 		for (int i = 0; i < enemies.size(); i++) {
 			for (int j = 0; j < player.getProjectiles().size(); j++) {
 				if (player.getProjectiles().get(j).intersects(enemies.get(i))) {
+					// if projectile collides with enemy, remove it.
 					player.getProjectiles().remove(j);
 					j--;
+					// enemy is caught in bubble
 					enemies.get(i).setCaught();
 
 				}

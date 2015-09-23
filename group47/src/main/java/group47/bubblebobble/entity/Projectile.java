@@ -2,7 +2,6 @@ package group47.bubblebobble.entity;
 
 import group47.bubblebobble.tilemap.TileMap;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -61,7 +60,8 @@ public class Projectile extends MapObject {
 	}
 
 	/**
-	 * Update.
+	 * Update. Udates the time a projectile is alive and moves upward and checks
+	 * collisions.
 	 */
 	public void update() {
 		long timePassed = System.currentTimeMillis() - lastUpdateTime;

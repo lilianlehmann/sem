@@ -49,8 +49,6 @@ public class Player extends MapObject {
 	public Player(TileMap tm) {
 		super(tm);
 		width = 38;
-		// height of player must be bigger than tile height, else the player can
-		// come stuck between platform tiles
 		height = 32;
 		cwidth = 38;
 		cheight = 32;
@@ -74,7 +72,7 @@ public class Player extends MapObject {
 		// Load sprite
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/Player/player.png"));
+					.getResourceAsStream("/player/player.png"));
 			sprite = spritesheet.getSubimage(0, 0, 38, 32);
 		}
 
@@ -97,6 +95,8 @@ public class Player extends MapObject {
 	 * and then puts the player in the new position
 	 */
 	public void update() {
+		// checks for all projectiles if they are alive, else remove them from
+		// the game.
 		for (int i = 0; i < projectiles.size(); i++) {
 			if (projectiles.get(i).getIsAlive()) {
 				projectiles.get(i).update();
@@ -110,6 +110,8 @@ public class Player extends MapObject {
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 
+		// if down button is pressed, new projectile is being shot in direction
+		// player is looking.
 		if (down) {
 			if (lastFireTime + fireDelay < System.currentTimeMillis()) {
 				lastFireTime = System.currentTimeMillis();
@@ -149,6 +151,7 @@ public class Player extends MapObject {
 			isAlive = false;
 		}
 
+		// resets position of player to start position
 		setPosition(100d, 100d);
 		flinching = true;
 		flinchTimer = System.nanoTime();

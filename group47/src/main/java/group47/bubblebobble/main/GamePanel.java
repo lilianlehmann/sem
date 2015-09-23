@@ -84,20 +84,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	/**
-	 * Initializes everything separately from the constructor
-	 */
-	private void init() {
-
-		// BufferedImage allows us to operate directly with image data
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-		g = (Graphics2D) image.getGraphics();
-
-		running = true;
-
-		gsm = new GameStateManager();
-	}
-
-	/**
 	 * Run method (Game Loop)
 	 * 
 	 * The game loop is the central code of the game. The initialize phase is
@@ -155,6 +141,20 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 		}
 
+	}
+
+	/**
+	 * Initializes everything separately from the constructor
+	 */
+	private void init() {
+
+		// BufferedImage allows us to operate directly with image data
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		g = (Graphics2D) image.getGraphics();
+
+		running = true;
+
+		gsm = new GameStateManager();
 	}
 
 	/**
